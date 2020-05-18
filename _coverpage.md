@@ -1,9 +1,9 @@
-![logo](img/yylogo.png)
+![logo](img/favicon-big.png)
 
-# 区块链文档知识库
+# 公链文档知识库
 
-> 详细介绍了区块链的相应技术和课程讲解，包含公链、联盟链、浏览器、运维工具、一键部署工具等
+> 详细介绍了公链相应技术，包含公链、浏览器、运维工具、一键部署工具等等
 
 
-[Github]()
+[Github](https://github.com/WisedomChainGroup/docs.git)
 [Get Started](README.md)
