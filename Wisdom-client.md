@@ -212,7 +212,7 @@ docker-compose -f wdc.yml up -d
 
 |参数项| 参数说明|作用
 |---|---|---
-|<div style="width:155pt">DATA_SOURCE_URL</div> | <div style="width:70pt">数据库配置</div>|默认为jdbc:postgresql://wdc_pgsql:5432/postgres，利用docker容器互联，不必修改。如果需要修改，需确保URL中的主机名为pgsql容器名，端口与pgsql容器内部的数据库端口相同
+|<div style="width:155pt">DATA_SOURCE_URL</div> | <div style="width:70pt">数据库配置</div>|默认为```jdbc:postgresql://wdc_pgsql:5432/postgres```，利用docker容器互联，不必修改。如果需要修改，需确保URL中的主机名为pgsql容器名，端口与pgsql容器内部的数据库端口相同
 |DB_USERNAME|数据库名称|默认为replica
 |DB_PASSWORD|数据库密码|默认为replica
 |ENABLE_MINING|是否开启挖矿|true是开启，false是关闭
