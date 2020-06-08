@@ -1,5 +1,5 @@
 - [一、介绍](README.md)
-- [二、Wisdom客户端](Wisdom-client.md)
+- [二、WisdomChain客户端](Wisdom-client.md)
 - [三、SDK使用](Wisdom-SDK.md)
 - [四、区块结构](Wisdom-block.md)
 - [五、事务结构](Wisdom-transaction.md)
