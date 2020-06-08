@@ -1,4 +1,4 @@
-- [一、介绍](Wisdom-index.md)
+- [一、介绍](README.md)
 - [二、Wisdom客户端](Wisdom-client.md)
 - [三、SDK使用](Wisdom-SDK.md)
 - [四、区块结构](Wisdom-block.md)
