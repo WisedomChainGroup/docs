@@ -15,6 +15,7 @@
 进行，对于公链五大技术栈（密码组件、共识机制、脚本系统、存储机制以及账户模型）的
 实现都进行了严格的逻辑验证以及数学论证。在WisdomChain的架构设计以及核心技术设
 计的过程中，也是秉承着为承载信用数据化、数据资产化的目标而进行。
+
 ## 1.2 如何使用本文档？
 
 ## 1.3 发展历史
@@ -48,6 +49,7 @@
 ## 1.4 社区简介
 &#160;&#160;&#160;&#160;&#160;&#160;WisdomChain社区是推动WisdomChain发展的重要组成部份，由各国技术人员及众
 多区块链爱好者组成，分布在中国，泰国，英国，加拿大，韩国，马来西亚，澳大利亚等数十个过家与地区，在twitter,facebook,telegram,weibo,wechat,github,coinmarketcap,mytoken,非小号，金色财经，币快报等几十家全球主要区块链媒体渠道均创建了WisdomChain技术专栏，传播WisdomChain区块链技术，并帮助开发者利用WisdomChain主链开发自已的DAPP。
+
 ##  1.5 基金会介绍
 &#160;&#160;&#160;&#160;&#160;&#160;基金会简介：新加坡智慧链基金会WisdomChainFoundationLtd.（简称WDCF)是经ACRA(ACCOUNTINGANDCORPORATEREGULATORYAUTHORITY)新加坡会计与企业管理局核准的非营利性机构。
 
