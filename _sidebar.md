@@ -13,5 +13,5 @@
 - [十三、RPC调用](Wisdom-RPC.md)
 - [十四、节点监控服务](Wisdom-monitoring.md)
 - [十五、FAQ](404.md)
-- [十六、参考文献](404.md)
-- [十七、术语表](404.md)
+- [十六、参考文献](Wisdom-reference.md)
+- [十七、术语表](Wisdom-glossary.md)
