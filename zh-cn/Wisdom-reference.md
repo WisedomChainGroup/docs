@@ -1,0 +1,1 @@
+<br>[1] 蒋勇, 文延, 嘉文.白话区块链[J]. 2017, 10.<br>[2] 林晓轩. 区块链技术在金融业的应用[J]. 中国金融, 2016(08): 17-18.<br>[3] Lazarovich A.Invisible Ink：Blockchain for Data Privacy［D］.Massachusetts Institute of Technology，2015.<br>[4] 区块链2.0：智能合约[EB/OL]. http://www.8btc.com/blockchain-smart-contract.<br>[5] 以太坊白皮书地址：https://github.com/ethereum/wiki/wiki/White-Paper
