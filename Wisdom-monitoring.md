@@ -68,3 +68,7 @@ monitor.jar直接启动jar包。
 &#160;&#160;&#160;&#160;&#160;&#160;5)鉴权设置，管理用户设置权限
 
 ![monitoring-user](img/monitoring-user.png)
+
+&#160;&#160;&#160;&#160;&#160;&#160;6)分叉修复，手动删除区块和分叉恢复
+
+![monitoring-user](img/monitoring-repair.png)
