@@ -216,7 +216,7 @@ docker-compose -f wdc.yml up -d
 ### 2.4.1 部署准备工作
 &#160;&#160;&#160;&#160;&#160;&#160;官方指定操作系统为Linux ubuntu18+64位，准备好操作系统后需要先安装部署Python，Python最低版本3.8.0，安装成功后用python3.8 --version查看安装是否正常（安装方式不同，指令根据安装方式查看）
 </br>
-![python-path](img/path.png)
+![python-path](../img/path.png)
 
 &#160;&#160;&#160;&#160;&#160;&#160;安装docker、docker-compose,具体安装步骤可参考 2.2.3安装docker、docker-compose
 
