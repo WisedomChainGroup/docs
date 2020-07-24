@@ -1,7 +1,7 @@
 # 1. Introduce
 ## 1.1 What is WisdomChain?
 ```
-Let the credit flow unprecedented,let the infinite imagination play,Let the infinite value can be embodied,until every corner of the planet.　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 
+Let the credit flow unprecedented,let the infinite imagination play,Let the infinite value can be embodied,until every corner of the planet.
                          
                                                                                                                      ——Genesis block message
 ```
