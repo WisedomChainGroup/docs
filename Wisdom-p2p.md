@@ -30,7 +30,7 @@
 |<div style="width:145pt">p2p.mode</div> | p2p communication mode|grpc,rest disabled
 |p2p.packet-cacheSize| lru cache size to prevent excessive flooding of p2p broadcast transactions|256
 |p2p.address|node address|set own node address The format is wisdom://ip address: port
-|p2p.bootstraps|official seed node address|The format is consistent with the node address, separated by commas. The default is:wisdom://47.74.183.249:9585,wisdom://47.74.216.251:9585,wisdom://47.96.67.155:9585,wisdom://47.74.86.106:9585
+|p2p.bootstraps|official seed node address|The format is consistent with the node address, separated by commas. The default is wisdom://47.74.183.249:9585,wisdom://47.74.216.251:9585,wisdom://47.96.67.155:9585,wisdom://47.74.86.106:9585
 |p2p.enable-discovery|node discovery|true is on (default), false is off
 |p2p.max-blocks-per-transfer|maximum number of block transfers|256
 |p2p.enable-message-log|message log|true is on, false is off (default)
