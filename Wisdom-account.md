@@ -1,64 +1,64 @@
-# 六、账户模型
-## 6.1 账户结构
-&#160;&#160;&#160;&#160;&#160;&#160;AccountState账户对象是对地址的抽象封装，对账户地址来说，仅仅只是一个简单的表示，没法再携带更多的数据，在实际过程中我们需要一个更加高级的账户功能，可以携带一些便于统计的数据。
+# 6. Account Model
+## 6.1 Account Structure
+&#160;&#160;&#160;&#160;&#160;&#160;The AccountState account object is the abstract encapsulation of the address. For the account address, it is only a simple representation, and it can't carry more data. In the actual process, we need a more advanced account function, which can carry some data that is convenient for statistics.
 
-&#160;&#160;&#160;&#160;&#160;&#160;AccountState对象的基本结构：
+&#160;&#160;&#160;&#160;&#160;&#160;Basic structure of the AccountState object：
 
-|编号|字段|长度/类型|说明
+|<div style="width:60pt">Number</div>|<div style="width:70pt">Field</div>|Length/Type|Explanation
 |:----:|:----:|:----:|---|
-|1| account|封装对象|账户的基本信息
-|2|interestMap|ByteArrayMap|申请孵化自定义Map
-|3|ShareMap|ByteArrayMap|分享孵化自定义Map
-|4|type|4字节|账户类型，不能为空
-|5|Contract|byte[]|规则编程的字节数据（RLP编码），如果类型不是规则编程，此处为0字节
-|6|TokensMap|ByteArrayMap|存储合约代币自定义Map,如果类型是规则编程，此处是空Map
+|1| account|Encapsulating objects|Basic information of account
+|2|interestMap|ByteArrayMap|Apply for incubation customization Map
+|3|ShareMap|ByteArrayMap|Sharing incubation customization Map
+|4|type|4bytes|Account type, cannot be empty
+|5|Contract|byte[]|Byte data of rule programming (RLP encoding), if the type is not rule programming, here is 0 byte
+|6|Tokensnap|ByteArrayMap|Store contract token customize Map. If the type is rule programming, here is empty Map
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;Account是账户基本信息对象的基本结构：
+&#160;&#160;&#160;&#160;&#160;&#160;Account is the basic structure of account basic information object：
 
-|编号 | 字段|长度/类型|说明
+|<div style="width:60pt">Number</div> | Field|Field/Type|Explanation
 |:----:|:----:|:----:|---|
-|1 | blockHeight|8字节|区块高度
-|2|pubkeyHash|20字节|地址的公钥哈希
-|3|nonce|8字节|无符号64位，防止重放攻击从1开始
-|4|balance|8字节|WDC余额
-|5|incubatecost|8字节|孵化本金
-|6|mortgage|8字节|抵押金额
-|7|vote|8字节|获得的投票数
+|1 | blockHeight|8bytes|blockHeight
+|2|pubkeyHash|20bytes|Public key hash of the address
+|3|nonce|8bytes|Unsigned 64 bit, prevent replay attack from 1
+|4|balance|8bytes|WDC balance
+|5|incubatecost|8bytes|Incubation principal
+|6|mortgage|8bytes|Mortgage amount
+|7|vote|8bytes|Number of votes obtained
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;Incubator是孵化对象的基本结构，在AccountState对象中，用自定义ByteArrayMap来存储孵化信息，Key 是申请孵化的事务哈希，Value是Incubator对象。
+&#160;&#160;&#160;&#160;&#160;&#160;Incubator is the basic structure of incubation object. In the AccountState object, custom ByteArrayMap is used to store incubation information. Key is the transaction hash applied for incubation, and Value is the Incubator object.
 
-|编号| 字段|长度/类型|说明
+|Nmber| Field|Field/Type|Explanation
 |:----:|:----:|:----:|---|
-|~~1~~|~~id~~|~~36字节~~|~~主键ID，已禁用~~
-|2|share_pubkeyhash|20字节|推荐者公钥哈希，如果没有推荐者，则全部填0
-|3|pubkeyhash|20字节|孵化者公钥哈希
-|4|txid_issue|32字节|申请孵化事务哈希
-|5|height|8字节|区块高度
-|6|cost|8字节|孵化本金
-|7|interest_ammount|8字节|利息余额
-|8|share_amount|8字节|分享余额
-|9|last_blockheight_interest|8字节|上次提取利息高度
-|10|last_blockheight_share|8字节|上次提取分享收益高度
+|~~1~~|~~id~~|~~36bytes~~|~~Primary key ID，Disabled~~
+|2|share_pubkeyhash|20bytes|Public key hash of recommender. If there is no recommender, fill in 0
+|3|pubkeyhash|20bytes|Incubator public key hash
+|4|txid_issue|32bytes|Apply for incubation transaction hash
+|5|height|8bytes|block height
+|6|cost|8bytes|Incubation principal
+|7|interest_ammount|8bytes|Interest balance
+|8|share_amount|8bytes|Share balance
+|9|last_blockheight_interest|8bytes|Last height of withdrawal interest
+|10|last_blockheight_share|8bytes|Last height of withdrawal share income
 
-## 6.2 状态表示
-AccountState账户状态是type,int类型表示，分别为：
+## 6.2 State Representation
+The status of an AccountState account is type and int type, respectively:
 
-&#160;&#160;&#160;&#160;&#160;&#160;0是普通地址；
+&#160;&#160;&#160;&#160;&#160;&#160;0 is a normal address；
 
-&#160;&#160;&#160;&#160;&#160;&#160;1是合约代币地址；
+&#160;&#160;&#160;&#160;&#160;&#160;1 is the contract token address；
 
-&#160;&#160;&#160;&#160;&#160;&#160;2是合约多重签名地址；
+&#160;&#160;&#160;&#160;&#160;&#160;2 is the contract multi signature address；
 
-&#160;&#160;&#160;&#160;&#160;&#160;3是合约锁定时间哈希地址；
+&#160;&#160;&#160;&#160;&#160;&#160;3 is the contract lock time hash address；
 
-&#160;&#160;&#160;&#160;&#160;&#160;4是合约锁定高度哈希地址。
+&#160;&#160;&#160;&#160;&#160;&#160;4 is the contract lock height hash address.
 
-## 6.3 nonce机制
+## 6.3 nonce mechanism
 
-&#160;&#160;&#160;&#160;&#160;&#160;nonce是防止节点受到重放攻击才存在的，每个账户的nonce都是从1开始的，每个账户发送一笔事务并写入进区块，nonce都需要nonce+1,nonce不能重复，不能为负数，只能是正整数。
+&#160;&#160;&#160;&#160;&#160;&#160;Nonce exists to prevent nodes from being attacked by replay. The nonce of each account starts from 1. Each account sends a transaction and writes it into the block. Nonce needs nonce + 1. Nonce cannot be repeated, cannot be negative, and can only be a positive integer.
 
-&#160;&#160;&#160;&#160;&#160;&#160;比如A账户要发送一笔转账事务，通过节点RPC查看当前该账户nonce是9，那A账户需发送一笔nonce是10的转账事务，nonce不能<=9,发送了nonce<=9的事务，节点会拒绝这笔事务；
+&#160;&#160;&#160;&#160;&#160;&#160;For example, if account A wants to send a transfer transaction, the node RPC is used to check that the current account nonce is 9, and then account A needs to send a transfer transaction with nonce of 10. Nonce cannot be < = 9. If a transaction with nonce < = 9 is sent, the node will reject the transaction;
 
-&#160;&#160;&#160;&#160;&#160;&#160;如果A账户发送了nonce=11的事务，这种现象叫做nonce跳号，节点对于nonce跳号是可以正常接收并打包进区块的，但节点会对nonce跳号有惩罚机制，正常情况下节点收到符合条件的事务会被立刻打包，但对于nonce 跳号的事务，会延迟打包，如果当前公链矿工节点是15个块矿工，那需要延迟15*7=105个区块后，才会被打包进区块，也就是延迟打包惩罚。
+&#160;&#160;&#160;&#160;&#160;&#160;If account A sends a transaction with nonce = 11, this phenomenon is called nonce skip. Nodes can normally receive and package nonce skips into blocks, but nodes will have a penalty mechanism for nonce skip.Under normal circumstances, the node will be immediately packed if it receives the qualified transaction. However, for the nonce skip transaction, the packet will be delayed. If the current public chain miner node is 15 block miners, it needs to delay 15 * 7 = 105 blocks before being packed into the block, that is, delay packing penalty.

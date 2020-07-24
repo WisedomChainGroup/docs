@@ -1,27 +1,27 @@
-# 十三、 RPC 调用
-## 13.1  接口说明
-&#160;&#160;&#160;&#160;&#160;详见： https://github.com/WisedomChainGroup/rpc-doc
+# 13. RPC Call
+## 13.1  Interface Description
+&#160;&#160;&#160;&#160;&#160;See： https://github.com/WisedomChainGroup/rpc-doc
 
-## 13.2 调用方法
-&#160;&#160;&#160;&#160;&#160;&#160;根据接口说明文档类型，分别使用对应的GET/POST的HTTP请求来完成RPC的调用。
+## 13.2 Call Method
+&#160;&#160;&#160;&#160;&#160;&#160;According to the document type of the interface description, the corresponding GET/POST HTTP request is used to complete the RPC call.
 
-&#160;&#160;&#160;&#160;&#160;&#160;官方语言默认是Java,以Java为例，使用Java实现GET和POST请求的方法常用的有两种：HTTPClient和HttpURLConnection。前者是第三方开源框架实现，对HTTP请求的封装很好，使用HTTPClient基本可以满足工作需要，其中HTTPClient3.1是org.apache.commmons.httpclient下操作远程url的工具包，HTTPClient4.5.5是org.apache.htttp.client下操作远程url的工具包。而HttpURLConnection是Java的标准请求方式。
+&#160;&#160;&#160;&#160;&#160;&#160;The official language is Java by default. Taking Java as an example, there are two commonly used methods to implement GET and POST requests in Java: HTTPClient and HttpURLConnection. The former is a third-party open-source framework, which encapsulates HTTP requests very well. Using HTTPClient can basically meet the needs of work.HTTPClient3.1 is the toolkit for operating remote URL under org.apache.commmons.httpclient, and HTTPClient4.5.5 is the toolkit for operating remote URL under org.apache.htttp.client. Httpurlconnection is the standard request mode of Java.
 
-## 13.3 更新热
-&#160;&#160;&#160;&#160;&#160;&#160;在特定的情况下，为让节点在不重启节点的情况下，对节点数据进行查询，或者对其数据更新修改等操作，所以节点提供了RPC接口热更新。
+## 13.3 Hot Patching
+&#160;&#160;&#160;&#160;&#160;&#160;In specific cases, in order to make the node query the node data or update and modify its data without restarting the node, the node provides RPC interface hot patching.
 
-&#160;&#160;&#160;&#160;&#160;&#160;但出于对节点安全的防护，本接口默认是关闭状态，如果节点想要开启此接口，需要在wdc.yml添加环境变量WISDOM_DLL_RPC:'true',开启此接口，再把相应jar包上传到指定libs文件下。
+&#160;&#160;&#160;&#160;&#160;&#160;However, for the protection of node security, the interface is closed by default. If a node wants to open this interface, it needs to add an environment variable WISDOM_DLL_RPC:'true' in wdc.yml to open the interface, and then upload the corresponding jar package to the specified libs file.
 
-### 13.3.1 接口详情
+### 13.3.1 Interface Details
 ```
 Function: dll
 POST/HTTP/1.1/Content-Type: applicatioc/jsoc;charset=UTF-8
 RequestURL: http://00.000.0.000:19585/dll
-Parameter： jsonParam(json格式)
+Parameter： jsonParam(json format)
 ResponseBody: { "message":"", "data":[], "statusCode":int }
 ```
 
-### 13.3.2 返回格式
+### 13.3.2 Return Format
 ```json
 {
   "message":"",
@@ -29,20 +29,20 @@ ResponseBody: { "message":"", "data":[], "statusCode":int }
   "code":int
 }
 
-  *message:描述
-  *data：数据
+  *message:describe
+  *data：data
   *code：
   {
-    2000正确
-    5000错误
+    2000correct
+    5000error
   }
 ```
-&#160;&#160;&#160;&#160;&#160;&#160;如果code是2000，message返回SUCCESS，data返回数据
+&#160;&#160;&#160;&#160;&#160;&#160;If the code is 2000, message returns success and data returns data
 
-&#160;&#160;&#160;&#160;&#160;&#160;如果code是5000，message返回错误信息，date返回为空
+&#160;&#160;&#160;&#160;&#160;&#160;If the code is 5000, message returns an error message and date returns null
 
-### 13.3.3 传参
-&#160;&#160;&#160;&#160;&#160;&#160;接口传入参数名称是jsonParam，json格式，不能为空，示例如下：
+### 13.3.3 Transfer Parameters
+&#160;&#160;&#160;&#160;&#160;&#160;The parameter name passed in by the interface is jsonParam in json format and cannot be empty. The example is as follows:
 ```json
 {
       "jarname":"dll-1.0.jar",
@@ -66,18 +66,17 @@ ResponseBody: { "message":"", "data":[], "statusCode":int }
         ]
 }
 ```
-jarname：需要执行的jar包全称，注意后缀也需要；
+jarname: the full name of the jar package to be executed. Note that the suffix is also required;
 
-classpackage:需要执行方法的路径+类名称，路径查看类方法中的package路径；
+classpackage: needs to execute the path of the method + class name, and the path looks at the package path in the class method;
 
-methodname：类中的方法名称；
+methodname: the name of the method in the class;
 
-classtype:：调用方法传参类型，参数类型包含0是DataSource、1是string、2是int、3是boolean、4是double、5是long，五种数据类型；
+classtype: the parameter type of the calling method. The parameter types include five data types: 0 is DataSource, 1 is string, 2 is int, 3 is boolean, 4 is double, 5 is long;
 
-objectList：具体传参数据。
-### 13.3.4 注意点
-&#160;&#160;&#160;&#160;&#160;&#160;classtype和objectList数组大小必须一致，且数据类型和传参参数必须匹配上，顺序保持一致，如果classtype中第0个索引是0，那objectList第0个索引放null，DataSource
-会在节点中获取并传入到方法中，DataSource用于对数据库的操作。
+Objectlist: specific transfer parameter data.
 
-&#160;&#160;&#160;&#160;&#160;&#160;如果是无参方法，classtype和objectList为空数组，但jarname、classpackage和
-methodname参数不能为空。
+### 13.3.4 Notes
+&#160;&#160;&#160;&#160;&#160;&#160;The size of the array of classtype and objectlist must be consistent, and the data type and parameter passing parameters must match in the same order. If the 0 th index in the classtype is 0, then the 0 th index of the objectlist will be null.The DataSource will be obtained from the node and passed into the method. Datasource is used for database operation.
+
+&#160;&#160;&#160;&#160;&#160;&#160;If it is a nonparametric method, the classtype and objectlist are empty arrays, but the jarname, classpackage, and methodname parameters cannot be empty.

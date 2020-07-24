@@ -1,57 +1,57 @@
-# 七、存储结构
-## 7.1 区块存储
-&#160;&#160;&#160;&#160;&#160;&#160;区块的存储采用PostgreSQL关系型数据库，版本号为10，其数据表分别是header、transaction、transaction_index。
+# 7. Storage Structure
+## 7.1 Block Storage
+&#160;&#160;&#160;&#160;&#160;&#160;The block is stored in PostgreSQL relational database with version number of 10, and its data tables are header, transaction and transaction_ index.
 
-&#160;&#160;&#160;&#160;&#160;&#160;header表，记录区块头信息
+&#160;&#160;&#160;&#160;&#160;&#160;Header table, record block header information
 
-|编号 | 字段|类型|说明|
+|Number | Field|Type|Explanation|
 |:----:|:----:|:----:|:----:|
-|1|block_hash|bytea|区块哈希
-|2|block_notice|bytea|备注
-|3|is_canonical|boolean|是否是主链区块，默认是
-|4|created_at|bigint|创建时间
-|5|hash_merkle_incubate|bytea|孵化状态梅克尔根
-|6|hash_merkle_root|bytea|梅克尔根
-|7|hash_merkle_state|bytea|梅克尔状态
-|8|hash_prev_block|bytea|上一个区块哈希
-|9|height|bigint|高度
-|10|nbits|bytea|目标难度
-|11|nonce|bytea|序号
-|12|total_weight|bigint|区块总重量
-|13|version|smallint|版本号
+|1|block_hash|bytea|block hash
+|2|block_notice|bytea|notes
+|3|is_canonical|boolean|Whether it is the main chain block or not. The default is yes
+|4|created_at|bigint|Creation time
+|5|hash_merkle_incubate|bytea|Incubation state Merkle root
+|6|hash_merkle_root|bytea|Merkle root
+|7|hash_merkle_state|bytea|Merkle state
+|8|hash_prev_block|bytea|Previous block hash
+|9|height|bigint|height
+|10|nbits|bytea|Target difficulty
+|11|nonce|bytea|Serial number
+|12|total_weight|bigint|Total block weight
+|13|version|smallint|Version number
 
-&#160;&#160;&#160;&#160;&#160;&#160;transaction表，记录事务详情
+&#160;&#160;&#160;&#160;&#160;&#160;transaction table to record transaction details
 
-|编号| 字段|类型|说明
+|Number | Field|Type|Explanation
 |:----:|:----:|:----:|:----:|
-|1|tx_hash| bytea|事务哈希
-|2|amount|bigint|余额
-|3|from|bytea|事务from的公钥
-|4|gas_price|bigint|gas单价
-|5|nonce|bigint|序号
-|6|payload|bytea|不同事务存放不同数据
-|7|signature|bytea|事务签名
-|8|to|bytae|事务to的公钥哈希
-|9|type|smallint|事务类型
-|10|version|smallint|版本号
+|1|tx_hash| bytea|Transaction hash
+|2|amount|bigint|balance
+|3|from|bytea|Public key of transaction from
+|4|gas_price|bigint|gas unit Price
+|5|nonce|bigint|Serial number
+|6|payload|bytea|Different transactions store different data
+|7|signature|bytea|Transaction signature
+|8|to|bytae|Public key hash of transaction to
+|9|type|smallint|Transaction type
+|10|version|smallint|Version number
 
-&#160;&#160;&#160;&#160;&#160;&#160;transaction_index表，事务和区块的关联表
+&#160;&#160;&#160;&#160;&#160;&#160;transaction_index table, association table of transactions and blocks
 
-|编号 | 字段|类型|说明
+|Number | Field|Type|Explanation
 |:----:|:----:|:----:|:----:|
-|1|block_hash|bytea|区块哈希
-|2|tx_hash|bytea|事务哈希
-|3|tx_index|integer|事务所在区块序号
+|1|block_hash|bytea|block hash
+|2|tx_hash|bytea|Transaction hash
+|3|tx_index|integer|Transaction number in block
 
-## 7.2 状态存储
-&#160;&#160;&#160;&#160;&#160;&#160;账户的集合组成了世界状态，而账户在组成世界状态时正采用了梅克尔帕特里夏树（MPT）的组织形式，并存储在K-V型数据库中。
+## 7.2 State Storage
+&#160;&#160;&#160;&#160;&#160;&#160;The collection of accounts constitutes the world state, and accounts are organized in the form of Merkle Patricia Tree (MPT) and stored in the K-V database.
 
-&#160;&#160;&#160;&#160;&#160;&#160;每个账户都处在树的叶子节点上，树的组织则按照排列顺序进行串联哈希，最终层层哈希得出世界状态。当更改某单一账户时，则会引发它所在分支的上层哈希值的更改，直到影响到根节点的哈希值，根节点的哈希值称为状态树，这个值将存入本地存储。世界状态随着区块链的前进而不断变化，状态树的值也不断变更。
+&#160;&#160;&#160;&#160;&#160;&#160;Each account is located in the leaf node of the tree, and the organization of the tree is hashed in series according to the arrangement order, and finally the world state is obtained by layer by layer hash. When a single account is changed, the upper hash value of its branch will be changed until the hash value of the root node is affected. The hash value of the root node is called the status tree, which will be stored in the local storage. The state of the world changes with the progress of the blockchain, and the value of the state tree also changes.
 
-## 7.3 检索结构
+## 7.3 Retrieval Structure
 
-![状态树](img/search.png)
+![State tree](img/search.png)
 
- &#160;&#160;&#160;&#160;&#160;&#160;前缀树是众所周知用于存储有序字符串的一种数据结构。MPT相比普通前缀树的主要优势在于它简缩的存储。如果我们在帕特里夏树中进行检索，我们将依次检索所搜索字符串中的各个字母，直到得到一条完整的路径才停止搜索（在正确的顺序下）。如果在检索完字符串（检索目标）中的所有字母之前就遇到了空指针，那就可以说该字符串并不在该前缀树中。另一方面，如果我们随着检索到达了一个叶子节点（分支末端节点），那么该路径就代表着目标字符串，可以认为目标字符串在前缀树之中。
+ &#160;&#160;&#160;&#160;&#160;&#160;Prefix Tree is a well-known data structure for storing ordered strings. The main advantage of MPT over ordinary prefix tree is its reduced storage. If we search in the Patricia Tree, we will search the letters of the string in turn until we get a complete path (in the correct order). If a null pointer is encountered before all the letters in the string (the target) are retrieved, the string is said to be not in the prefix tree. On the other hand, if we reach a leaf node (branch end node) with the retrieval, then the path represents the target string, which can be considered as in the prefix tree.
 
-&#160;&#160;&#160;&#160;&#160;&#160;例如在上图中，我们可以通过字符串[3,15,3,13,4,10]查找到“dog”,而cat对应的十六进制编码形式就是[3,15,3,13,4,10]，所以我们认为这个树中存在cat到dog的键值映射。
+&#160;&#160;&#160;&#160;&#160;&#160;For example, in the above figure, we can find "dog" through the string [3,15,3,13,4,10], and the hexadecimal encoding form of cat is [3,15,3,13,4,10], so we think there is a key value mapping from cat to dog in this tree.

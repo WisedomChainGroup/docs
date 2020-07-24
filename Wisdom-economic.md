@@ -1,35 +1,35 @@
-# 十一、经济模型
-## 11.1 总量
-&#160;&#160;&#160;&#160;&#160;&#160;总量恒定为5.9亿个WDC
+# 11. Economic Model
+## 11.1  Total Amount
+&#160;&#160;&#160;&#160;&#160;&#160;The total  amount is constant at 590 million WDC
 
-|编号| 类型|说明|额度
+|Number| Type|Explanation|Amount
 |:----:|:----:|:----:|:----:
-|1 | 主链共识|通过矿工奖励的形式发行|88000000
-|2| 总孵化器初始余额|设置一个地址|35765823
-|3|官方初始|30个地址|177000000
-|4|用户初始|用户原孵化数据|289234177
-|合计|590000000
+|1 | Consensus of main chain|Issued in the form of miners' Awards|88000000
+|2| Total incubator initial balance|Set an address|35765823
+|3|Official initial|30 addresses|177000000
+|4|User initialization|User's original incubation data|289234177
+|Total|590000000
 
-## 11.2 释放曲线
-&#160;&#160;&#160;&#160;&#160;&#160;公链初期出块时间为30秒，每个区块奖励20个WDC,每过2102400（约2年）个区块减少大约52.22%，直到区块奖励调整为6.66666666个WDC,所以除了第一次降息区块高度调整为5736000个区块后，后面的降息高度固定为6307200个区块。
+## 11.2 Release Curve
+&#160;&#160;&#160;&#160;&#160;&#160;The initial output block time of the public chain is 30 seconds,and 20 WDC will be rewarded for each block. After 2102400 blocks (about 2 years), the number will decrease by about 52.22%, until the block reward is adjusted to 6.66666666 WDC. Therefore, except for the first interest rate reduction block height adjusted to 5736000 blocks, the latter interest rate reduction rate is fixed at 6307200 blocks.
 
-![经济模型](img/economic.png)
+![economic model](img/economic.png)
 
-## 11.3  手续费
-&#160;&#160;&#160;&#160;&#160;&#160;事务的手续费等于事务gas乘以gasPrice，不同事务类型的gas各不相同，乘以gasPrice等于手续费，手续费默认0.002个WDC，如果想多付手续费，只需要增加gasPrice，事务的gas表如下
+## 11.3  Service Charge
+&#160;&#160;&#160;&#160;&#160;&#160;The service charge of a transaction is equal to the transaction gas multiplied by gasPrice. The gas of different transaction types is different. Multiplied by gasPrice equals to the service charge. The service charge is 0.002 WDC by default. If you want to pay more service charge, you only need to add gasPrice. The gas table of the transaction is as follows:
 
-|编号| 事务类型|说明
+|Number| Transaction type|Explanation
 |:----:|:----:|:----:|
 |1| coinbase|0Gas
-|2| 普通转账|50000Gas
-|3|投票|20000Gas
-|4|存证|100000Gas
-|5|部署合约|100000Gas
-|6|调用合约|100000Gas
-|7|申请孵化|100000Gas
-|8|提取利息|100000Gas
-|9|提取分享|100000Gas
-|10|提取本金|100000Gas
-|11|撤回投票|20000Gas
-|12|抵押|20000Gas
-|13|撤回抵押|20000Gas
+|2| general transfer|50000Gas
+|3|vote|20000Gas
+|4|certificate storage|100000Gas
+|5|deployment contract|100000Gas
+|6|call contract|100000Gas
+|7|apply for incubation|100000Gas
+|8|withdraw  interest|100000Gas
+|9|withdraw share|100000Gas
+|10|Withdraw principal|100000Gas
+|11|Withdraw vote|20000Gas
+|12|mortgage|20000Gas
+|13|withdraw mortgage|20000Gas

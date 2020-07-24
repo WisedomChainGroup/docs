@@ -1,31 +1,24 @@
-# 一、介绍
-## 1.1 什么是WisdomChain?
+# 1. Introduce
+## 1.1 What is WisdomChain?
 ```
-　　让信用前所未有的流动，让无限的想象可能发挥，让无穷价值可以体现，直到星球的每个角落。
+Let the credit flow unprecedented,let the infinite imagination play,Let the infinite value can be embodied,until every corner of the planet.　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 
+                         
+                                                                                                                     ——Genesis block message
+```
+&#160;&#160;&#160;&#160;&#160;&#160;WisdomChain (short for "WDC") is a basic public chain which is oriented to business applications.Its functional design is carried out around asset definition, multi signature, conditional payment and certificate storage. Based on the design principles of stable security and multi-party autonomy, a unique implementation of technology stack is introduced in the design of performance, security and system openness.WisdomChain provides a simple and reliable technology implementation mechanism, and has a series of tool chains as application service middleware to reduce the use cost.
 
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　——创世区块留言
- ```
-&#160;&#160;&#160;&#160;&#160;&#160;WisdomChain（简称“WDC”）是一个面向商业应用的基础
-公链，其功能设计围绕着资产定义、多重签名以及条件支付和数据存证来进行，以稳定安全
-与多方自治为设计原则，在性能、安全性以及系统的开放性设计上引入了独特的技术栈实现
-方式。WisdomChain提供了简洁可靠的技术实现机制，并拥有一系列的工具链作为应用服
-务中间件，降低使用成本。
+&#160;&#160;&#160;&#160;&#160;&#160;As the underlying public chain system, WisdomChain is designed around the principles of notarization autonomy, security and reliability. The implementation of the five public chain technology stacks (cryptographic components, consensus mechanism, script system, storage mechanism and account model) is strictly logic verified and mathematically demonstrated. In the process of WisdomChain's architecture design and core technology design, it is also adhering to the goal of carrying credit datalization and data capitalization.
 
-&#160;&#160;&#160;&#160;&#160;&#160;WisdomChain作为底层的公链系统，一切设计都围绕着公证自治、安全可靠的原则来
-进行，对于公链五大技术栈（密码组件、共识机制、脚本系统、存储机制以及账户模型）的
-实现都进行了严格的逻辑验证以及数学论证。在WisdomChain的架构设计以及核心技术设
-计的过程中，也是秉承着为承载信用数据化、数据资产化的目标而进行。
+## 1.2 How to use this document?
+&#160;&#160;&#160;&#160;&#160;&#160;Through this document, you can get the basic methods of users participating in the Wisdom Chain project. First, to be a node in the network, you need to run a Wisdom Chain Client. Connecting to the network tells you basic information about the network, connection troubleshooting, and blockchain synchronization.
 
-## 1.2 如何使用本文档？
-&#160;&#160;&#160;&#160;&#160;&#160;通过本文档可以获取用户参与到Wisdom Chain项目中的基本方法。首先，要想成为网络中的节点，需要运行一个Wisdom Chain客户端。连接到网络会告知关于网络、连接故障排除和区块链同步的基本信息。
+&#160;&#160;&#160;&#160;&#160;&#160;In the use of SDK section, a variety of development tools are provided to enable users to develop third-party applications based on the main chain SDK of Wisdom Chain. 
 
-&#160;&#160;&#160;&#160;&#160;&#160;在SDK使用这一节，提供了多种开发工具，使用户可以开发基于Wisdom Chain主链SDK的第三方应用。
+&#160;&#160;&#160;&#160;&#160;&#160;In the following chapters, the core technologies of the five technology stacks are introduced according to the framework of Wisdom Chain, and the implementation steps of smart contract calling procedures such as asset definition, multi signature and conditional payment are explained in detail.
 
-&#160;&#160;&#160;&#160;&#160;&#160;后续章节按照Wisdom Chain的架构对五大技术栈的核心技术展开介绍，并对实现资产定义、多重签名、条件支付等智能合约调用程序给与了步骤详解。
+##  1.3 Foundation Introduction
+&#160;&#160;&#160;&#160;&#160;&#160;Foundation profile:WisdomChainFoundationLtd. (short for WDCF) is a non-profit organization approved by ACRA (ACCOUNTING AND CORPORATE REGULATORY AUTHORITY).
 
-##  1.3 基金会介绍
-&#160;&#160;&#160;&#160;&#160;&#160;基金会简介：新加坡智慧链基金会WisdomChainFoundationLtd.（简称WDCF)是经ACRA(ACCOUNTINGANDCORPORATEREGULATORYAUTHORITY)新加坡会计与企业管理局核准的非营利性机构。
+&#160;&#160;&#160;&#160;&#160;&#160;WDCF is headquartered in Singapore and its operation center is in Bangkok, Thailand, WDCF is committed to promoting the development of blockchain technology, disseminating blockchain knowledge, promoting the combination of WisdomChain blockchain technology and real industry, using WisdomChain blockchain technology to improve the competitiveness of enterprises, promoting the development and application of WisdomChain blockchain technology in various industries around the world, and finally realizing the use of blockchain technology to promote economic development and improve people's quality of life. After the public chain of WisdomChain goes online, it is deployed in the form of community autonomy. Its safe and stable operation and revenue depend on many nodes deployed in the world!
 
-&#160;&#160;&#160;&#160;&#160;&#160;WDCF总部设在新加坡，运营中心在泰国曼谷,WDCF致力于推动区块链技术的发展，传播区块链知识，促进WisdomChain区块链技术与实体产业相结合，利用WisdomChain区块链技术提升企业竞争力，推动WisdomChain区块链技术在全球各行业中发展与应用，最终实现用区块链技术促进经济发展，提高人们的生活质量。WisdomChain公链上线后以社区自制的形式部署，安全平稳运行及收益均依托部署在全球的众多节点！
-
-## 1.4 贡献列表
+## 1.4 Contribution List

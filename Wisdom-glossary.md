@@ -1,59 +1,59 @@
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**公链：**</font>公有链是指全世界任何人都可读取、发送交易且交易能获得有效确认的、也可以参与其中共识过程的区块链。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Public Chain：**</font>Public chain refers to the blockchain that anyone in the world can read and send transactions, and the transaction can be effectively confirmed, and can also participate in the consensus process.
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**技术栈：**</font>将N种技术互相组合在一起(N>1)，作为一个有机的整体来实现某种目的或功能。也可以指掌握这些技术以及配合使用的经验。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Technology Stack：**</font>N technologies are combined with each other (N > 1), as an organic whole to achieve a certain purpose or function. It can also refer to the experience of mastering these technologies and using them together.
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**共识机制：**</font>所谓“共识机制”，是通过特殊节点的投票，在很短的时间内完成对交易的验证和确认；对一笔交易，如果利益不相干的若干个节点能够达成共识，我们就可以认为全网对此也能够达成共识。
-
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**通证：**</font>通证是以数字形式存在的权益凭证，它代表的是一种权利，一种固有和内在的价值。通证可以代表一切可以数字化的权益证明，从身份证到学历文凭，从货币到票据，从钥匙、门票到积分、卡券，从股票到债券，账目、所有权、资格、证明等人类社会全部权益证明，都可以用通证来代表。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Consensus Mechanism ：**</font>The so-called "consensus mechanism" is to complete the verification and confirmation of the transaction in a short time through the voting of special nodes;For a transaction, if several nodes with unrelated interests can reach a consensus, we can think that the whole network can reach a consensus on this.
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**开源代码：**</font>开放源代码（Open source code）也称为源代码公开，指的是一种软件发布模式。一般的软件仅可取得已经过编译的二进制可执行档，通常只有软件的作者或著作权所有者等拥有程序的原始码。有些软件的作者会将原始码公开，此称之为“源代码公开”，但这并不一定符合“开放源代码”的定义及条件，因为作者可能会设定公开原始码的条件限制，例如限制可阅读原始码的对象、限制衍生品等。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**DAPP：**</font>DApp即分布式应用或去中心化应用，DApp于区块链，就好比App于IOS和Android。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**全节点：**</font>全节点是拥有完整区块链账本的节点，全节点需要占用内存同步所有的区块链数据，能够独立校验区块链上的所有交易并实时更新数据，主要负责区块链的交易的广播和验证。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**矿工节点：**</font>是指设置为挖矿状态的节点，处于挖矿状态的节点需要贡献算力，有机会被选为写入节点参与新的区块生成，维持链的增长。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Token：**</font>Token is a kind of certificate of rights and interests in digital form, which represents a kind of right, an inherent and intrinsic value. Token can represent all rights and interests proof that can be digitized, from ID card to diploma, from currency to bill, from key, ticket to points, card coupon, from stock to bond, account, ownership, qualification, certificate and other all rights and interests proof of human society, can be represented with token.
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**挖矿：**</font>所谓区块链中的挖矿，与我们日常生活中所说的挖矿不同，它指的是区块链网络中，获取数字货币的勘探方式的昵称。因为币的数量有限，这种行为又与淘金矿的举动相类似，所以，我们就把通过这种规则获得数字货币的方式称之为挖矿，而参与数据处理的这些人，我们就称之为矿工。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Open Source Code：**</font>Open source code, also known as source code disclosure, refers to a software release mode. Generally, only compiled binary executable files can be obtained for general software, and only the author or copyright owner of the software owns the original code of the program. Some software authors will disclose the source code, which is called "source code disclosure". However, this does not necessarily conform to the definition and conditions of "open source code", because the author may set restrictions on the conditions for the disclosure of source code, such as restricting the objects of readable source code, restricting derivatives, etc.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**DAPP：**</font>DAPP refers to distributed application or decentralized application. DAPP in blockchain is just like app in IOS and Android.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Full Node：**</font>Full node is a node with complete blockchain ledger,It needs to occupy memory to synchronize all the blockchain data. It can independently verify all transactions on the blockchain and update the data in real time. It is mainly responsible for broadcasting and verifying the transactions of the blockchain.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Miner Node：**</font>It refers to the node set to the mining state. The node in the mining state needs to contribute computing power, and has the opportunity to be selected as the write node to participate in the generation of new blocks and maintain the growth of the chain.
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**端口映射：**</font>端口映射是NAT的一种，功能是把在公网的地址转翻译成私有地址，采用路由方式的ADSL宽带路由器拥有一个动态或固定的公网IP，ADSL直接接在HUB或交换机上，所有的电脑共享上网。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**环境变量：**</font>一般是指在操作系统中用来指定操作系统运行环境的一些参数，如：临时文件夹位置和系统文件夹位置等。环境变量是在操作系统中一个具有特定名字的对象，它包含了一个或者多个应用程序所将使用到的信息。例如Windows和DOS操作系统中的path环境变量，当要求系统运行一个程序而没有告诉它程序所在的完整路径时，系统除了在当前目录下面寻找此程序外，还应到path中指定的路径去找。用户通过设置环境变量，来更好的运行进程。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Mining：**</font>The so-called mining in the blockchain is different from the mining in our daily life. It refers to the nickname of the exploration method to obtain digital currency in the blockchain network. Because the number of coins is limited, and this behavior is similar to that of gold mining, so we call the way to obtain digital currency through this 	rule as mining, and those who participate in data processing are called miners.
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**镜像：**</font>是一种文件存储形式，是冗余的一种类型，一个磁盘上的数据在另一个磁盘上存在一个完全相同的副本即为镜像。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Port Mapping：**</font>Port mapping is a kind of NAT. Its function is to translate the address in public network into private address. ADSL broadband router with routing mode has a dynamic or fixed public network IP. ADSL is directly connected to the HUB or switch, and all computers share the Internet access.
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**SDK：**</font>软件开发工具包一般都是一些软件工程师为特定的软件包、软件框架、硬件平台、操作系统等建立应用软件时的开发工具的集合。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Java：**</font>Java是一门面向对象编程语言，不仅吸收了C++语言的各种优点，还摒弃了C+ + 里难以理解的多继承、指针等概念，因此Java语言具有功能强大和简单易用两个特征。Java语言作为静态面向对象编程语言的代表，极好地实现了面向对象理论，允许程序员以优雅的思维方式进行复杂的编程。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Node.js：**</font>Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。 Node.js 使用了一个事件驱动、非阻塞式 I/O 的模型。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Csharp：**</font>C#读作C Sharp。C#是微软公司发布的一种面向对象的、运行于.NET Framework和.NET Core(完全开源，跨平台)之上的高级程序设计语言。C#是一种安全的、稳定的、简单的，由C和C+ +衍生出来的面向对象的编程语言。它在继承C和C++强大功能的同时去掉了一些它们的复杂特性。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**哈希：**</font>Hash，一般翻译做散列、杂凑，或音译为哈希，是把任意长度的输入（又叫做预映射pre-image）通过散列算法变换成固定长度的输出，该输出就是散列值。这种转换是一种压缩映射，也就是，散列值的空间通常远小于输入的空间，不同的输入可能会散列成相同的输出，所以不可能从散列值来确定唯一的输入值。简单的说就是一种将任意长度的消息压缩到某一固定长度的消息摘要的函数。
-
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**区块体：**</font>记录一定时间内所生成的详细数据，包括当前区块经过验证的、区块创建过程中生成的所有交易记录或是其他信息，可以理解为账本的一种表现形式。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Environment Variables：**</font>Generally, it refers to some parameters used to specify the operating system operating environment in the operating system, such as the location of temporary folder and system folder. Environment variable is an object with a specific name in the operating system. It contains the information that one or more applications will use. For example, for the path environment variable in Windows and DOS operating systems, when the system is required to run a program without telling it the full path of the program, the system should not only look for the program under the current directory, but also find the path specified in the path. Users can run the process better by setting environment variables.
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**区块头：**</font>区块头里面存储着区块的头信息，包含上一个区块的哈希值（PreHash），本区块体的哈希值（Hash），以及时间戳（TimeStamp）等等。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Mirror：**</font>Is a form of file storage, is a type of redundancy, the data on one disk on another disk has an identical copy, that is, mirror image.
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**时间戳：**</font>时间戳是使用数字签名技术产生的数据，签名的对象包括了原始文件信息、签名参数、签名时间等信息。时间戳系统用来产生和管理时间戳，对签名对象进行数字签名产生时间戳，以证明原始文件在签名时间之前已经存在。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**SDK：**</font>Software development kit is usually a collection of development tools for software engineers to build application software for specific software packages, software frameworks, hardware platforms, and operating system.
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**公钥：**</font>公钥（Public Key）与私钥（Private Key）是通过一种算法得到的一个密钥对（即一个公钥和一个私钥），公钥是密钥对中公开的部分，私钥则是非公开的部分。公钥通常用于加密会话密钥、验证数字签名，或加密可以用相应的私钥解密的数据。通过这种算法得到的密钥对能保证在世界范围内是独一的。使用这个密钥对的时候，如果用其中一个密钥加密一段数据，必须用另一个密钥解密。比如用公钥加密数据就必须用私钥解密，如果用私钥加密也必须用公钥解密，否则解密将不会成功。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Java：**</font>Java is an object-oriented programming language. It not only absorbs the advantages of C++ language, but also discards the concepts of multi inheritance and pointer which are difficult to understand in C++. Therefore, Java language has two characteristics: powerful function and easy to use. Java language, as the representative of static object-oriented programming language, perfectly implements the object-oriented theory and allows programmers to carry out complex programming with elegant thinking mode.
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**梅克尔树：**</font>梅克尔树是区块链的重要数据结构， 其作用是快速归纳和校验区块数据的存在性和完整性。一般意义上来讲，它是哈希大量聚集数据“块”的一种方式，它依赖于将这些数据“块”分裂成较小单位的数据块，每一个bucket块仅包含几个数据“块”，然后取每个bucket单位数据块再次进行哈希，重复同样的过程，直至剩余的哈希总数仅变为1。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Node.js：**</font>Node.js is a JavaScript running environment based on Chrome V8 engine. Node.js uses an event driven, non blocking I/O model.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Csharp：**</font>C# pronounced C Sharp. C# is an object-oriented high-level programming language released by Microsoft, which runs on the .NET Framework and .NET Core (completely open source, cross platform). C# is a safe, stable and simple object-oriented programming language derived from C and C++. It inherits the powerful functions of C and C++ while removing some of their complex features.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Hash：**</font>Hash,  is to convert any length of input (also known as  pre image) into a fixed length output through hash algorithm, and the output is the hash value. This transformation is a kind of compression mapping, that is, the space of hash value is usually much smaller than that of input, and different inputs may be hashed into the same output, so it is impossible to determine the unique input value from the hash value. In short, it is a function that compresses messages of any length into a message digest of a fixed length.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Block Body：**</font>Recording the detailed data generated within a certain period of time, including all transaction records or other information that has been verified in the current block and generated during the block creation process, can be understood as a form of account book.
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**硬分叉：**</font>区块链发生永久性分歧，在新共识规则发布后，部分没有升级的节点无法验证已经升级的节点生产的区块，通常硬分叉就会发生。代码出现一个硬分叉，会改变挖矿算法的难度级别。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Block Header：**</font>The block header stores the header information of the block, including the hash value of the previous block (prehash), the hash value of the block body (hash), and timestamp, etc.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Time Stamp：**</font>Time stamp is the data generated by digital signature technology. The object of signature includes original file information, signature parameters, signature time and so on. The time stamp system is used to generate and manage the time stamp. The signature object is digitally signed to generate the time stamp to prove that the original file exists before the signature time.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Public Key：**</font>Public key and private key are a key pair (i.e. a public key and a private key) obtained by an algorithm. The public key is the public part of the key pair, while the private key is the non-public part. Public keys are usually used to encrypt session keys, verify digital signatures, or encrypt data that can be decrypted with the corresponding private key. The key pair obtained by this algorithm can be guaranteed to be unique in the world. When using this key pair, if one key is used to encrypt a piece of data, the other key must be used to decrypt it. For example, if the data is encrypted with the public key, it must be decrypted with the private key. Otherwise, the decryption will not succeed.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Merkle Tree：**</font>Merkle tree is an important data structure of blockchain, its function is to quickly summarize and verify the existence and integrity of block data. Generally speaking, it is a way of hashing a large number of data "blocks". It depends on splitting these data "blocks" into smaller units of data blocks. Each bucket block contains only a few data "blocks". Then each bucket unit data block is hashed again, and the same process is repeated until the remaining total hash number is only 1.
 
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**网络拓扑：**</font>网络拓扑是指用传输媒体互连各种设备的物理布局，特别是计算机分布的位置以及电缆如何通过它们。
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Hard Bifurcation：**</font>Permanent differences occur in the blockchain. After the new consensus rules are released, some nodes that have not been upgraded can not verify the blocks produced by the upgraded nodes, so hard bifurcation usually occurs. A hard bifurcation of the code will change the difficulty level of the mining algorithm.
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**重放攻击：**</font>重放攻击(Replay Attacks)又称重播攻击、回放攻击，是指攻击者发送一个目的主机已接收过的包，来达到欺骗系统的目的，主要用于身份认证过程，破坏认证的正确性。重放攻击可以由发起者，也可以由拦截并重发该数据的敌方进行。攻击者利用网络监听或者其他方式盗取认证凭据，之后再把它重新发给认证服务器。重放攻击在任何网络通过程中都可能发生，是计算机世界黑客常用的攻击方式之一。
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Network Topology：**</font>Network topology refers to the physical layout of various devices interconnected by transmission media, especially the location of computers and how cables pass through them.
+
+&#160;&#160;&#160;&#160;&#160;&#160;<font color="黑体" size=4 face="黑体">**Replay Attack：**</font>Replay attacks,  refers to the attacker sending a packet that has been received by the target host to achieve the purpose of cheating the system. It is mainly used in the process of identity authentication to destroy the correctness of authentication. Replay attacks can be carried out by the initiator or by the enemy who intercepts and resends the data. Attackers steal authentication credentials by network monitoring or other methods, and then send them back to the authentication server. Replay attack can happen in any network communication process, which is one of the common attack methods of hackers in the computer world.
 
 

@@ -1,74 +1,66 @@
-# 十四 、 节点监控服务
-## 14.1 安装部署
-&#160;&#160;&#160;&#160;&#160;&#160;详见： https://github.com/WisedomChainGroup/wisdom-operations
+# 14.  Node Monitoring Service
+## 14.1 Installation and Deployment
+&#160;&#160;&#160;&#160;&#160;&#160;See： https://github.com/WisedomChainGroup/wisdom-operations
 
-&#160;&#160;&#160;&#160;&#160;&#160;拉取最新releases，解压并修改config/application.properties配置文件，java-jar
-monitor.jar直接启动jar包。
+&#160;&#160;&#160;&#160;&#160;&#160;Pull the latest releases, unzip and modify the config/application.properties configuration file,java-jarmonitor.jar start the jar package directly.
 
-|参数项 | 参数名称|作用
+|Parameter item | Parameter name|Effect
 |:----:|:----:|:----:
-|数据库的 JDBC URL | DATA_SOURCE_URL|连接数据库
-|数据库 用户名| DB_USERNAME|连接数据库
-|数据库 密码|DB_PASSWORD|连接数据库
-|操作系统密码|System_Password|root密码
+|JDBC URL of the database | DATA_SOURCE_URL|Connect to database
+|Database User name| DB_USERNAME|Connect to database
+|Database Password|DB_PASSWORD|Connect to database
+|Operating system password|System_Password|root password
 
-## 14.2 功能说明
-&#160;&#160;&#160;&#160;&#160;&#160;1)分叉恢复
+## 14.2 Function Description
+&#160;&#160;&#160;&#160;&#160;&#160;1) Bifurcation recovery
 
-&#160;&#160;&#160;&#160;&#160;&#160;实时检测数据同步情况，如果发现有分叉的情况出现则删除对应的分叉，数据继续
-同步。10s/次监听绑定的节点，当发现区块哈希不满足与2/3邻居节点一致时，停止节
-点镜像，删除对应区块并重启节点重新同步。
+&#160;&#160;&#160;&#160;&#160;&#160;Real time detection of data synchronization, if there is a bifurcation, delete the corresponding bifurcation, and continue to synchronize the data. Listen to the bound node for 10s / time. When it is found that the block hash is not consistent with the 2/3 neighbor nodes, stop the node mirroring, delete the corresponding block and restart the node for resynchronization.
 
-&#160;&#160;&#160;&#160;&#160;&#160;2)卡块监测
+&#160;&#160;&#160;&#160;&#160;&#160;2) Fixture Block Monitoring
 
-&#160;&#160;&#160;&#160;&#160;&#160;实时监测数据同步情况，如果发现长时间停留在一高度，则发送邮件通知出现卡块
-的情况。
+&#160;&#160;&#160;&#160;&#160;&#160;Real time monitoring of data synchronization, if found to stay at a high level for a long time, send e-mail to inform the fixture block.
 
-&#160;&#160;&#160;&#160;&#160;&#160;3)导入功能
+&#160;&#160;&#160;&#160;&#160;&#160;3) Import Function
 
-&#160;&#160;&#160;&#160;&#160;&#160;官方提供备份数据，运维工具提供直接导入备份数据的功能。使用pg_dump导出
-对应Copy的SQL语句直接在对应数据库里执行。(暂未开放)
+&#160;&#160;&#160;&#160;&#160;&#160;The official provides backup data, and operation and maintenance tools provide the function of directly importing backup data. Using pg_dump exports the SQL statement corresponding to the Copy and executes it directly in the corresponding database. (not yet open)
 
-&#160;&#160;&#160;&#160;&#160;&#160;4)导出功能
+&#160;&#160;&#160;&#160;&#160;&#160;4) Export function
 
-&#160;&#160;&#160;&#160;&#160;&#160;直接导出通过地址查询的事务数据到Excel。使用了POI对查询的结果进行导出。
-导出字节格式数据，并恢复为关系数据。
+&#160;&#160;&#160;&#160;&#160;&#160;Directly export the transaction data queried by address to Excel. POI is used to export the query results. Export byte format data and restore to relational data.
 
-&#160;&#160;&#160;&#160;&#160;&#160;5)预警通知
+&#160;&#160;&#160;&#160;&#160;&#160;5) Early warning notice
 
-&#160;&#160;&#160;&#160;&#160;&#160;是一个可选功能，当监听节点发现出现分叉时、CPU100%占用率、节点卡块、节
-点停止运行会发送邮件通知。使用了Javamail进行邮件的发送。
+&#160;&#160;&#160;&#160;&#160;&#160;It is an optional function. When listening to a node and finding a bifurcation, CPU 100% occupancy rate, node fixture block, and node stop running will send email notification. JavaMail is used to send mail.
 
-&#160;&#160;&#160;&#160;&#160;&#160;6)日志收集
+&#160;&#160;&#160;&#160;&#160;&#160;6) Log collection
 
-&#160;&#160;&#160;&#160;&#160;&#160;可根据日期以及日志关键字查看、导出相应日志数据信息。(暂未开放)
+&#160;&#160;&#160;&#160;&#160;&#160;The corresponding log data information can be viewed and exported according to the date and log keywords. (not yet open)
 
-&#160;&#160;&#160;&#160;&#160;&#160;7)鉴权设置
+&#160;&#160;&#160;&#160;&#160;&#160;7) Authentication settings
 
-&#160;&#160;&#160;&#160;&#160;&#160;运维工具需要具备用户权限的设置，默认分为管理员、操作员与仅查询3个角色
-运维工具服务端需要进行身份验证，禁止任意查询。
+&#160;&#160;&#160;&#160;&#160;&#160;The operation and maintenance tools need to have user permissions. By default, they are divided into three roles: administrator, operator and query only.The server of operation and maintenance tools needs to be authenticated, and arbitrary query is prohibited.
 
-## 14.3 前端操作
-&#160;&#160;&#160;&#160;&#160;&#160;1)登陆界面，输入用户名密码进行登陆
+## 14.3 Front End Operation
+&#160;&#160;&#160;&#160;&#160;&#160;1)Login page, enter the user name and password to login
 
-![monitoring-login](img/monitoring-login.png)
+![monitoring-login](../img/monitoring-login.png)
 
-&#160;&#160;&#160;&#160;&#160;&#160;2)信息页面，展示基础信息
+&#160;&#160;&#160;&#160;&#160;&#160;2)Information page, showing basic information
 
-![monitoring-index](img/monitoring-index.png)
+![monitoring-index](../img/monitoring-index.png)
 
-&#160;&#160;&#160;&#160;&#160;&#160;3)控制台，管理、绑定节点
+&#160;&#160;&#160;&#160;&#160;&#160;3)Console, manage and bind nodes
 
-![monitoring-node](img/monitoring-node.png)
+![monitoring-node](../img/monitoring-node.png)
 
-&#160;&#160;&#160;&#160;&#160;&#160;4)预警信息，管理收、发邮件信息
+&#160;&#160;&#160;&#160;&#160;&#160;4)Early warning information, management of receiving and sending mail information
 
-![monitoring-email](img/monitoring-email.png)
+![monitoring-email](../img/monitoring-email.png)
 
-&#160;&#160;&#160;&#160;&#160;&#160;5)鉴权设置，管理用户设置权限
+&#160;&#160;&#160;&#160;&#160;&#160;5)Authentication setting, management user setting permissions
 
-![monitoring-user](img/monitoring-user.png)
+![monitoring-user](../img/monitoring-user.png)
 
-&#160;&#160;&#160;&#160;&#160;&#160;6)分叉修复，手动删除区块和分叉恢复
+&#160;&#160;&#160;&#160;&#160;&#160;6)Branch repair, manually delete blocks and branch recovery
 
-![monitoring-user](img/monitoring-repair.png)
+![monitoring-user](../img/monitoring-repair.png)

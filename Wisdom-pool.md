@@ -1,45 +1,43 @@
-# 八、内存池
-## 8.1 参数列表
+# 8. Memory Pool
+## 8.1 Parameter List
 
-|参数项 | 参数说明|作用
+|Parameter item | Parameter description|<div style="width:60pt">effect</div>
 |:----:|:----:|:----:|
-|pool.pending.maxcount | pending队列上限|3w
-|pool.queued.maxcount| queued队列上限|6w
-|pool.clear.days|queued和pending中事务过期时间|2小时
-|min.procedurefee|事务进入内存池的最低手续费|0.002wdc
-|wisdom.ipc-config.queued_to_pending_cycle|queued到pending的写入周期|5秒
-|wisdom.ipc-config.clear-cycle|queued到pending的清理周期|1分钟
-|pool.queuedtopending.maxcount|每次queued到pending最大事务数|5000
+|pool.pending.maxcount | pending queue upper limit|3w
+|pool.queued.maxcount|queued queue upper limit|6w
+|pool.clear.days|transaction expiration time in queued and pending|2hours
+|min.procedurefee|minimum handling charge for transactions entering memory pool|0.002wdc
+|wisdom.ipc-config.queued_to_pending_cycle|write cycle from queued to pending|5seconds
+|wisdom.ipc-config.clear-cycle|cleaning cycle from queued to pending|1minutes
+|pool.queuedtopending.maxcount|maximum number of transactions per time from queued to pending|5000
 
-## 8.2 内存队列
-&#160;&#160;&#160;&#160;&#160;&#160;事务内存队列分为queued和pending
+## 8.2 Memory Queue
+&#160;&#160;&#160;&#160;&#160;&#160;The transaction memory queue is divided into queued and pending
 
-&#160;&#160;&#160;&#160;&#160;&#160;其中队列存储的结构是TransPool
+&#160;&#160;&#160;&#160;&#160;&#160;The structure of queue storage is TransPool
 
-|编号|字段|长度/类型|说明
+|<div style="width:50pt">Number</div> |<div style="width:80pt">Field</div>|<div style="width:120pt">Length/Type</div>|Explanation
 |:----:|:----:|:----:|---
-|1|transaction|封装对象|事务对象
-|2|state|4字节|事务状态，0是待确认，1是被引用，2是已确认
-|3|datetime|8字节|进入pending的时间，毫秒
-|4|height|8字节|区块高度，只有状态是1和2时，才会有区块高度
+|1|transaction|Encapsulating objects|Transaction object
+|2|state|4bytes|Transaction status, 0 is to be confirmed, 1 to be referenced, 2 to be acknowledged
+|3|datetime|8bytes|Time to enter pending, millisecond
+|4|height|8bytes|Block height. Only when the status is 1 and 2, there will be block height
 
-&#160;&#160;&#160;&#160;&#160;&#160;**queued队列：**
+&#160;&#160;&#160;&#160;&#160;&#160;**queued queue：**
 
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;queued队列是等待打包的事务队列，当节点RPC接收事务时，会对事务进行校验，校验正确的事务，会进入到queued队列，queued队列上限60000。
-同一个账户地址发送两条相同nonce事务，只有事务类型相同，queued中才会被覆盖，后进queued会覆盖前进queued的事务。
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;The queued queue is a transaction queue waiting to be packed. When the node RPC receives the transaction, it will verify the transaction. If the correct transaction is verified, it will enter the queued queue, and the upper limit of the queued queue will be 60000.
+The same account address sends two identical nonce transactions. Only if the transaction type is the same, the queued transaction will be covered, and the last queued transaction will cover the forward queued transaction.
 
-&#160;&#160;&#160;&#160;&#160;&#160;**pending队列：**
+&#160;&#160;&#160;&#160;&#160;&#160;**pendin queue：**
 
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;pending队列是准备打包的事务队列，每隔5s从queued到pending写入事务，事务在进入pending前会再次进行校验，校验不通过的，会在queued
-中直接删除，每次写入pending事务最大5000条，进入到pending的事务，事务状态默认是0，queued也会删除相应的事务。
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;The pending queue is a transaction queue to be packed. Transactions are written from queued to pending every 5 seconds. Transactions will be checked again before entering pending. Those that fail the verification will be directly deleted in queued. The maximum number of pending transactions written each time is 5000. The transaction status of the transactions entering pending is 0 by default, and the corresponding transactions will be deleted by queued.
 
-&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;矿工节点打包的事务，都是从pending列队中获取，节点在打包时还会校验事务，校验成功的会被打包进区块，不成功的事务在pending中会直接被删
-除，打包成功后，相应的事务状态会修改成1，只有满足区块确认数后写入db成功的，状态修改成2后等待清除。
+&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;The transactions packaged by the miner node are all obtained from the pending queue. When the node is packaged, the transaction will be verified. If the verification is successful, it will be packed into the block, and the unsuccessful transaction will be directly deleted in the pending.After the package is successful, the corresponding transaction status will be changed to 1. Only when the number of block confirmations is satisfied and the DB is successfully written, the status is changed to 2 and wait for clearing.
 
-## 8.3 优先原则
-&#160;&#160;&#160;&#160;&#160;&#160;在内存队列中一直遵循一个原则，事务排序永远都是根据nonce来排序的，所以队列中不同账户都是按照的nonce升序的，也就是从小到大，这样打包时会优先打包nonce小的事务，符合nonce机制。
+## 8.3 Priority Principle
+&#160;&#160;&#160;&#160;&#160;&#160;In memory queues, there is a principle that transactions are always sorted according to nonce. Therefore, different accounts in the queue are sorted in ascending order according to nonce, that is, from small to large. In this way, transactions with small nonce will be packed first, which conforms to the nonce mechanism.
 
-## 8.4 本地存储
-&#160;&#160;&#160;&#160;&#160;&#160;为了防止节点意外终止进程或其他原因导致节点停止，节点会定时存储queued和pending中未打包事务，每10分钟定时序列化在K-V型数据库中。
+## 8.4 Local Storage
+&#160;&#160;&#160;&#160;&#160;&#160;In order to prevent the unexpected termination of the node or other reasons causing the node to stop, the node will regularly store the unpackaged transactions in queued and pending, and serialize them in the K-V database regularly every 10 minutes.When the node starts, it initializes the last serialized transaction in the transaction memory pool, and the miner node gets the correct transaction package from it.
 
-&#160;&#160;&#160;&#160;&#160;&#160;节点在启动时，会把最后一次序列化的事务初始化在事务内存池中，矿工节点再从中获取正确的事务打包。
+&#160;&#160;&#160;&#160;&#160;&#160;When the node starts, it first obtains the serialized unpacked transactions from the K-V database and deserializes them to the queued and pending transaction memory pools respectively. The transactions that pass the verification will be packed normally, and those that fail to verify will be deleted immediately.

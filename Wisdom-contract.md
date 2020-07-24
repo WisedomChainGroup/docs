@@ -1,62 +1,62 @@
-# 十二、可编程验证规则
-## 12.1 规则类型
-&#160;&#160;&#160;&#160;&#160;&#160;由于公链中的程序功能是明确指定的，严格定义格式，因此这里的程序组成实际上更多的是一种模板的格式定义，而功能是明确的。
+# 12. Programmable Verification Rules
+## 12.1 Rule Type
+&#160;&#160;&#160;&#160;&#160;&#160;Because the program function in the public chain is clearly specified and the format is strictly defined, the program composition here is actually more of a template format definition, and the function is clear.
 
-&#160;&#160;&#160;&#160;&#160;&#160;共支持5种规则定义：
+&#160;&#160;&#160;&#160;&#160;&#160;Five rule definitions are supported:
 
-&#160;&#160;&#160;&#160;&#160;&#160;1、资产定义-ASSET
+&#160;&#160;&#160;&#160;&#160;&#160;1、Asset definition-ASSET
 
-&#160;&#160;&#160;&#160;&#160;&#160;2、多重签名-MULTISIGN
+&#160;&#160;&#160;&#160;&#160;&#160;2、Multi-signature-MULTISIGN
 
-&#160;&#160;&#160;&#160;&#160;&#160;3、哈希时间锁定支付-HASHTIMELOCK
+&#160;&#160;&#160;&#160;&#160;&#160;3、Hash time lock payment-HASHTIMELOCK
 
-&#160;&#160;&#160;&#160;&#160;&#160;4、哈希高度锁定支付-HASHHEIGHTLOCK
-## 12.2 规则部署
-&#160;&#160;&#160;&#160;&#160;&#160;以上规则类型都拥有固定的规则定义格式，节点核心在源码一级硬编码支持，因此，用户实际上只需要填充自己的属性值和规则中的动态的值。
+&#160;&#160;&#160;&#160;&#160;&#160;4、Hash height lock payment-HASHHEIGHTLOCK
+## 12.2 Rule Deployment
+&#160;&#160;&#160;&#160;&#160;&#160;All the above rule types have a fixed rule definition format, and the node core is supported by source level hard coding. Therefore, users only need to fill in their own attribute values and dynamic values in the rules.
 
-&#160;&#160;&#160;&#160;&#160;&#160;部署规则的过程也就是将用户自己的规则写入到区块，是通过一条特殊的事务来完成的，使用事务格式如下
+&#160;&#160;&#160;&#160;&#160;&#160;The process of deploying rules, that is, writing users' own rules to blocks, is completed through a special transaction. The transaction format is as follows:
 
-|编号 |字段名|作用|类型
-|:----:|:----:|:----:|:----:|
-|1| version|事务版本|1字节|
-|2| txHash|事务哈希|32字节 SHA3-256
-|3|type|事务类型|1字节
-|4|nonce|防止重放攻击|无符号64位
-|5|from|签发者公钥|32字节
-|6|gasPrice|手续费单价，实际的手续费是单价乘以Gas值|无符号64位
-|7|amount|填0|无符号64位
-|8|signature|签发者签名|byte[]
-|9|to|全部填0|20字节 Hash160
-|10|payloadLen|字节长度|4字节
-|11|payload|字节格式的规则程序|byte[]
+|<div style="width:45pt">Number</div> |<div style="width:60pt">Field name</div>|Effect|<div style="width:95pt">type</div>
+| ---- |:----:|:----:|:----:|
+|1| version|transaction version|1byte|
+|2| txHash|transaction hash|32bytes SHA3-256
+|3|type|transaction type|1byte
+|4|nonce|prevent replay attack|unsigned 64 bit
+|5|from|issuer public key|32bytes
+|6|gasPrice|Service charge unit price, the actual service charge is the unit price multiplied by Gas value|unsigned 64 bit
+|7|amount|fill in 0|unsigned 64 bit
+|8|signature|signature of signer|byte[]
+|9|to|fill in all 0|20bytes Hash160
+|10|payloadLen|byte length|4bytes
+|11|payload|regular program in byte format|byte[]
 
-&#160;&#160;&#160;&#160;&#160;&#160;<font color=red>注意第9项To,部署时填写0</font>
+&#160;&#160;&#160;&#160;&#160;&#160;<font color=red>Note Item 9 To, fill in 0 when deploying</font>
 
-&#160;&#160;&#160;&#160;&#160;&#160;事务写入到区块账本后，对应的事务哈希，可以根据地址的生成逻辑，返回一个地址，这个地址相当于就是合约地址。通过这种方式，合约地址就与账户地址一样，是在一个统一的账户模型中。
+&#160;&#160;&#160;&#160;&#160;&#160;After the transaction is written to the block ledger, the corresponding transaction hash can return an address according to the generation logic of the address, which is equivalent to the contract address. In this way, the contract address, like the account address, is in a unified account model.
 
-&#160;&#160;&#160;&#160;&#160;&#160;为了区分合约地址与普通账户地址，合约地址前缀设定为大写的WR两个字符。
-## 12.3 规则调用
-&#160;&#160;&#160;&#160;&#160;&#160;每一种类型的规则中都会包含若干个规则语句，规则语句是可以在外部进行签名调用的，使用事务格式如下
+&#160;&#160;&#160;&#160;&#160;&#160;In order to distinguish the contract address from the general account address, the contract address prefix is set to two upper case WR characters.
+## 12.3 Rule Call
+&#160;&#160;&#160;&#160;&#160;&#160;Each type of rule contains several rule statements. The rule statements can be called by signature outside. The transaction format is as follows:
 
-编号 |字段名|作用|类型
-:----:|:----:|:----:|:----:|
-1| version|事务版本|1字节|
-2| txHash|事务哈希|32字节 SHA3-256
-3|type|事务类型|1字节
-4|nonce|防止重放攻击|无符号64位
-5|from|签发者公钥|32字节
-6|gasPrice|手续费单价，实际的手续费是单价乘以Gas值|无符号64位
-7|amount|填0|无符号64位
-8|signature|签发者签名|byte[]
-9|to|合约地址的160哈希值|20字节 Hash160
-10|payloadLen|字节长度|4字节
-11|payload|字节格式的调用规则|byte[]
+|<div style="width:45pt">Number</div> |<div style="width:60pt">Field name</div>|Effect|<div style="width:95pt">type</div>
+:----:|:----:|:----:|:----:
+1| version|transaction version|1byte
+2| txHash|transaction hash|32bytes SHA3-256
+3|type|transaction type|1byte
+4|nonce|prevent replay attack|unsigned 64 bit
+5|from|issuer public key|32bytes
+6|gasPrice|Service charge unit price, the actual service charge is the unit price multiplied by Gas value|unsigned 64 bit
+7|amount|fill in 0|unsigned 64 bit
+8|signature|signature of signer|byte[]
+9|to|160 hash value of the contract address|20bytes Hash160
+10|payloadLen|byte length|4bytes
+11|payload|calling rules in byte format|byte[]
 
-&#160;&#160;&#160;&#160;&#160;&#160; <font color=red>注意第9项的合约地址，与规则部署中的说明是一致的</font>
+&#160;&#160;&#160;&#160;&#160;&#160; <font color=red>Note that the contract address of Item 9 is consistent with the description in rule deployment</font>
 
-## 12.4 资产定义
-### 12.4.1 资产规则
-语法格式
+## 12.4 Asset Definition
+### 12.4.1 Asset Rules
+Grammatical format
 
 ```json
 {
@@ -67,103 +67,103 @@
         "create":"xxxx",
         "owner":"yyyy",
         "allowincrease":"0",
-        "info":{}    //300字节/可为空
+        "info":{}    //300bytes/nullable
     }
 }
 ```
 
-&#160;&#160;&#160;&#160;&#160;&#160;以上为资产定义的规则程序，支持如下的规则函数调用：
+&#160;&#160;&#160;&#160;&#160;&#160;The above is the rule program defined for assets, and supports the following rule function calls:
 
-|编号| 规则函数|备注
+|Number| Rule function|Notes
 |:----:|---|:----:|
-|1|```"changeowner":{ "newowner":"ddddd" }```|更换所有者公钥
-|2|```"transfer":{ "from":"公钥", "to":"公钥哈希", "value":"50" }```|转发资产
-|3|```"increased":{ "amount":500 }```|是否增发
+|1|```"changeowner":{ "newowner":"ddddd" }```|Change owner public key
+|2|```"transfer":{ "from":"Public key", "to":"Public key hash", "value":"50" }```|Forwarding assets
+|3|```"increased":{ "amount":500 }```|whether to issue additional or not
 
-## 12.4.2  规则属性
-1、code，资产代码
+## 12.4.2  Rule Attribute
+1. code，Asset code
 
-&#160;&#160;&#160;&#160;&#160;&#160;测试要点：
+&#160;&#160;&#160;&#160;&#160;&#160;test points：
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、资产代码必须大于等于3个字符，且小于等于12个字符
+&#160;&#160;&#160;&#160;&#160;&#160;1) The asset code must be greater than or equal to 3 characters and less than or equal to 12 characters
 
-&#160;&#160;&#160;&#160;&#160;&#160;2）、不能包含空格/软回车等特殊字符
+&#160;&#160;&#160;&#160;&#160;&#160;2) It cannot contain special characters such as space / soft carriage return
 
-&#160;&#160;&#160;&#160;&#160;&#160;3）、必须全部为英文字符
+&#160;&#160;&#160;&#160;&#160;&#160;3) Must be all English characters
 
-&#160;&#160;&#160;&#160;&#160;&#160;4）、字符必须全部为大写
+&#160;&#160;&#160;&#160;&#160;&#160;4) Characters must be all uppercase
 
-&#160;&#160;&#160;&#160;&#160;&#160;5）、不能是WDC
+&#160;&#160;&#160;&#160;&#160;&#160;5) It can't be WDC
 
-&#160;&#160;&#160;&#160;&#160;&#160;6）、不能与已经存在的code发生重复冲突
+&#160;&#160;&#160;&#160;&#160;&#160;6) Cannot duplicate conflict with existing code
 
-&#160;&#160;&#160;&#160;&#160;&#160;字节长度：6
+&#160;&#160;&#160;&#160;&#160;&#160;Byte length：6
 
-2、offering，初期发行额度
+2. offering，Initial issuance amount
 
-&#160;&#160;&#160;&#160;&#160;&#160;测试要点：
+&#160;&#160;&#160;&#160;&#160;&#160;test points：
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、必须是整数
+&#160;&#160;&#160;&#160;&#160;&#160;1) Must be an integer
 
-&#160;&#160;&#160;&#160;&#160;&#160;2）、值域在long类型的范围内
+&#160;&#160;&#160;&#160;&#160;&#160;2) The value range is in the range of  long type
 
-&#160;&#160;&#160;&#160;&#160;&#160;3）、不能小于等于0
+&#160;&#160;&#160;&#160;&#160;&#160;3) Cannot be less than or equal to 0
 
-&#160;&#160;&#160;&#160;&#160;&#160;字节长度：8
+&#160;&#160;&#160;&#160;&#160;&#160;Byte length：8
 
-3、totalamount，发行总量
+3. totalamount，Total issue amount
 
-&#160;&#160;&#160;&#160;&#160;&#160;测试要点:
+&#160;&#160;&#160;&#160;&#160;&#160;test points:
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、必须是整数
+&#160;&#160;&#160;&#160;&#160;&#160;1) Must be an integer
 
-&#160;&#160;&#160;&#160;&#160;&#160;2）、值域在long类型的范围内
+&#160;&#160;&#160;&#160;&#160;&#160;2) The value range is in the range of  long type
 
-&#160;&#160;&#160;&#160;&#160;&#160;3）、不能小于等于0
+&#160;&#160;&#160;&#160;&#160;&#160;3) Cannot be less than or equal to 0
 
-&#160;&#160;&#160;&#160;&#160;&#160;4）、部署时默认与“初期发行额度”同
+&#160;&#160;&#160;&#160;&#160;&#160;4) By default, it is the same as "initial issue amount" during deployment
 
-&#160;&#160;&#160;&#160;&#160;&#160;字节长度：8
+&#160;&#160;&#160;&#160;&#160;&#160;Byte length：8
 
-4、create，规则创建者的公钥
+4. create，Public key of rule Creator
 
-5、owner，规则所有者的公钥哈希
+5. owner，Public key hash of the rule owner
 
-6、allowincrease，是否允许增发 1表示允许，0表示不允许
+6. allowincrease，Whether additional issue is allowed or not: 1 means allowed, 0 means not allowed
 
-7、精度默认保持与主链默认的精度一致，小数点最大为8位
+7. By default, the precision remains the same as the default precision of the main chain, and the maximum decimal point is 8 digits
 
-## 12.4.3 通用校验
-1）、调用某个规则函数时，需要确认对应的规则程序中是否包含此规则函数，防止错位调用，比如针对多签规则调用资产规则的函数
+## 12.4.3 General Verification
+1) When calling a rule function, it is necessary to confirm whether the rule function is included in the corresponding rule program to prevent miscalling, such as calling the function of asset rule for multiple signature rules;
 
-2）、规则函数的调用语法必须是合法的，不能包含多余内容
+2) The calling syntax of a rule function must be legal and cannot contain redundant content;
 
-3）、调用数据也使用RLP编码
+3) Call data is also uses RLP coding.
 
-## 12.4.4 资产规则函数
+## 12.4.4 Asset Rule Function
 
-|编号 | 规则函数|校验要点
+|<div style="width:50pt">Number</div>| Rule function|Key points of verification
 |:----:|---|---|
-|1|```"changeowner":{ "newowner":"ddddd" }```|1、必须由现有的owner签发事务才有效<br>2、newowner是目标地址对应的公钥哈希，且必须是合法公钥哈希<br>3、若newowner全为0，表明销毁owner <br>4、此数据使用RLP编码<br>5、调用成功后，更新规则程序的属性状态值，更新字段为owner,注意并不是删除替换原有的值，而是在新的区块中包含了新版本的值<br>6、更换所有者与增发的事务，不在同一个区块中一起打包<br>7、更换所有者不会导致账户中的余额发生变化<br>8、newOwner与原来的owner不能一致<br>9、ForkDB中如有同一资产两次更换所有者事务，第二条事务在打包时会被清除
-|2| ```"transfer":{ "from":"公钥", "to":"公钥哈希", "value":50 }```|1、此规则调用不涉及到多签场景<br>2、from是指公钥<br>3、to是指目标地址的公钥哈希<br>4、vaule是转发金额，金额必须大于0，底层数据表示使用最小精度，是整数表示<br>5、value必须小于等于fron地址账户对应资产的余额<br>6、注意，此处的from部分，与整个事务的from部分必须保持一致<br>7、value必须在long范围内<br>8、调用成功后，更新from与to对应资产的余额
-|3|```"increased":{ "amount":500 }```|1、规则合约中指定的owner才能签发增发事务<br>2、增发的金额必须大于0 <br>3、增发的金额必须是整数<br>4、增发的金额值域在long类型范围内<br>5、增发后，总金额值域必须在long类型范围内 <br>6、设定为允许增发才可以增发
+|1|```"changeowner":{ "newowner":"ddddd" }```|1、Transactions must be signed by an existing owner to be valid<br>2、newowner is the public key hash corresponding to the target address and must be a legal public key hash<br>3、If all newowners are 0, the owner is destroyed <br>4、This data uses RLP coding<br>5、After the call is successful, update the attribute status value of the rule program and update the field to owner. Note that the new version of the value is included in the new block instead of deleting and replacing the original value<br>6、Transactions that change owners and  issue shares are not packaged together in the same block<br>7、Changing the owner does not change the balance in the account<br>8、The new owner cannot be consistent with the original owner<br>9、If the owner transaction of the same asset is changed twice in ForkDB, the second transaction will be cleared when packing
+|2| ```"transfer":{ "from":"public key", "to":"public key hash", "value":50 }```|1、This rule call does not involve multiple signature scenarios<br>2、from is the public key<br>3、to is the public key hash of the destination address<br>4、vaule is the forwarding amount, and the amount must be greater than 0. The underlying data represents the minimum precision and is an integer<br>5、Value must be less than or equal to the balance of the corresponding asset in the fron address account<br>6、note that the from part here must be consistent with the from part of the entire transaction<br>7、value must be in the long range<br>8、after the call is successful, update the balance of assets corresponding to from and to
+|3|```"increased":{ "amount":500 }```|1、Only the owner specified in the rule contract can issue additional issue transactions<br>2、The amount of additional issue must be greater than 0 <br>3、The amount of additional issue must be an integer<br>4、The amount range of additional issuance is within the range of long type<br>5、After the issuance, the total value range must be within the scope of the long type. <br>6、It can be issued only if it is allowed to issue additional shares
 
-&#160;&#160;&#160;&#160;&#160;&#160;注意一个隐形的调用，当资产定义规则部署时，会默认将期发行总额全部赋值给owner账户。
+&#160;&#160;&#160;&#160;&#160;&#160;Note an invisible call. When the asset definition rule is deployed, the total amount of issue will be assigned to the owner account by default.
 
-## 12.5 多重签名
-&#160;&#160;&#160;&#160;&#160;&#160;多重签名，是为了防止单个私钥丢失，或者众筹模式下的应用的安全信任问题支持的模式是M-N,表示一个规则最多有M签名，但是同时有MN签名时可以进行签发（注意，MN须小于等于NM）
+## 12.5 Multi-Signature
+&#160;&#160;&#160;&#160;&#160;&#160;Multi-signature is to prevent the loss of a single private key or the application security trust problem in crowdfunding mode. The supported mode is M-N, which means that a rule can have M signature at most, but it can be signed when there is MN signature at the same time (note that MN must be less than or equal to NM)
 
-本规则支持的多重签名逻辑如下：
+The multi-signature logic supported by this rule is as follows:
 
-1）、签名没有顺序要求，只要达到相应的数量即可
+1) There is no order requirement for signature, as long as the corresponding number is reached
 
-2）、多签是一个规则
+2) Multi-signature is a rule
 
-3）、多签既支持WDC，也支持其他资产
+3) Multi-signature supports both WDC and other assets
 
-4）、多签地址与多签地址以及普通地址之间，可以任意转发
+4) Any forwarding can be made between multi-signature address, multi-signature address and ordinary address
 
-语法格式
+Grammatical format
 
 ```json
 {
@@ -179,76 +179,76 @@
 }
 ```
 
-&#160;&#160;&#160;&#160;&#160;&#160;以上为多签的规则定义，支持如下的规则函数调用：
+&#160;&#160;&#160;&#160;&#160;&#160;The above is the definition of multi-signature rules. The following rule function calls are supported:
 
-|编号 | 规则函数|备注
+|<div style="width:50pt">Number</div>| Rule function|Notes
 |:----:|---|:----:|
-|1| ```"transfer":{ "origin":"m", "dest":"s", "from":[], "signatures":[], "to":"公钥哈希", "value":50, "pubkeyhashs":[] }```|多签转账
+|1| ```"transfer":{ "origin":"m", "dest":"s", "from":[], "signatures":[], "to":"Public key hash", "value":50, "pubkeyhashs":[] }```|Multi-signature transfer
 
-注意，如果是普通地址之间的转发，无论是WDC还是自定义资产，都不涉及对本规则程序的调用。只有涉及到多签场景到调用才会使用到本规则函数。
+Note that if it is forwarding between ordinary addresses, no matter WDC or custom assets, it does not involve the call to this rule program. Only calls involving multi-signature scenarios will use this rule function.
 
-### 12.5.1  规则属性
-1、asset160hash，是指资产的hash160值
+### 12.5.1  Rule Attribute
+1、asset160hash，is the hash160 value of the asset
 
-&#160;&#160;&#160;&#160;&#160;&#160;校验要点：
+&#160;&#160;&#160;&#160;&#160;&#160;verify points：
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、若是，此处全部填0
+&#160;&#160;&#160;&#160;&#160;&#160;1) If so, fill in 0
 
-&#160;&#160;&#160;&#160;&#160;&#160;2）、若是自定义资产，则需校验区块中是否存在
+&#160;&#160;&#160;&#160;&#160;&#160;2) If it is a user-defined asset, you need to verify whether it exists in the block
 
-&#160;&#160;&#160;&#160;&#160;&#160;3）、在一个区块中，不能同时包含资产定义以及对资产的多签定义
+&#160;&#160;&#160;&#160;&#160;&#160;3) In a block, asset definition and multi-signature definition cannot be included at the same time
 
-2、n，最少需要达到的签名数
+2、n，Minimum number of signatures required
 
-&#160;&#160;&#160;&#160;&#160;&#160;校验要点：
+&#160;&#160;&#160;&#160;&#160;&#160;verify points：
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、必须大于等于2
+&#160;&#160;&#160;&#160;&#160;&#160;1) Must be greater than or equal to 2
 
-&#160;&#160;&#160;&#160;&#160;&#160;2）、必须小于等于2
+&#160;&#160;&#160;&#160;&#160;&#160;2) Must be less than or equal to 2
 
-&#160;&#160;&#160;&#160;&#160;&#160;3）、必须是整数
+&#160;&#160;&#160;&#160;&#160;&#160;3) Must be an integer
 
-3、m，总计可以具备的签名数
+3、m，Total number of signatures available
 
-&#160;&#160;&#160;&#160;&#160;&#160;校验要点：
+&#160;&#160;&#160;&#160;&#160;&#160;verify points：
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、必须大于等于2
+&#160;&#160;&#160;&#160;&#160;&#160;1) Must be greater than or equal to 2
 
-&#160;&#160;&#160;&#160;&#160;&#160;2）、必须小于等于8
+&#160;&#160;&#160;&#160;&#160;&#160;2) Must be less than or equal to8
 
-&#160;&#160;&#160;&#160;&#160;&#160;3）、必须是整数
+&#160;&#160;&#160;&#160;&#160;&#160;3) Must be an integer
 
-4、pubkeys，表示公钥数组
+4、pubkeys，represents an array of public keys
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、部署规则时，一旦部署，不能更改数组中的公钥排列顺序
+&#160;&#160;&#160;&#160;&#160;&#160;1) When you deploy a rule, once deployed, you cannot change the public key order in the array
 
-&#160;&#160;&#160;&#160;&#160;&#160;2）、进行多签时，不用遵守排列顺序
+&#160;&#160;&#160;&#160;&#160;&#160;2) When multi-signatures are made, the order is not to be followed
 
-&#160;&#160;&#160;&#160;&#160;&#160;3）、使用未压缩公钥
+&#160;&#160;&#160;&#160;&#160;&#160;3) Use uncompressed public key
 
-&#160;&#160;&#160;&#160;&#160;&#160;4）、必须是合法公钥
+&#160;&#160;&#160;&#160;&#160;&#160;4) Must be a legal public key
 
-5、amount，表示总额
+5、amount，represents the total amount
 
-&#160;&#160;&#160;&#160;&#160;&#160;1）、部署时为0
+&#160;&#160;&#160;&#160;&#160;&#160;1) 0 at deployment time
 
-6、Pubkeyhashs，表示公钥哈希数组
-
-&#160;&#160;&#160;&#160;&#160;&#160;
-1）、必须是合法公钥哈希
+6、Pubkeyhashs，represents an array of public key hashes
 
 &#160;&#160;&#160;&#160;&#160;&#160;
-2）、必须和pubkeys保持对应的一致
+1) Must be a legal public key hash
 
 &#160;&#160;&#160;&#160;&#160;&#160;
-3）、部署规则时，一旦部署，不能更改数组中的公钥哈希排里顺序
+2) It must be consistent with pubkeys
 
 &#160;&#160;&#160;&#160;&#160;&#160;
-4）、进行多签时，不用遵守排列顺序，第一个元素必须与事务签发者保持一致
+3) When deploying rules, once deployed, the public key hash sorting order in the array cannot be changed
 
-7、在构造事务时payload签名原文的nonce为构造事务from的当前nonce
+&#160;&#160;&#160;&#160;&#160;&#160;
+4) When multi-signing, the first element must be consistent with the transaction signer without following the order of arrangement
 
-### 12.5.2 多签规则函数
+7、When constructing a transaction, the nonce of the original payload signature is the current nonce of the constructed transaction from
+
+### 12.5.2 Multi-Signature Rule Function
 
 ```json
 {
@@ -257,324 +257,108 @@
            　  "dest":"0",
                "from":"[]",
                "signatures":[],
-               "to":"公钥哈希",
+               "to":"Public key hash",
 　             "value":50,
 　             "pubkeyhashs":[]
 　           }
 }    
-```    
-解释：
+```
+Explanation：
 
-1）、origin
+1) origin
 
-&#160;&#160;&#160;&#160;&#160;&#160;表示账户来源地址，１表示多签地址，０表示普通账户地址
+&#160;&#160;&#160;&#160;&#160;&#160;Represents the source address of the account, 1 represents the multi-signature address, and 0 represents the general account address
 
-２）、dest
+2) dest
 
-&#160;&#160;&#160;&#160;&#160;&#160;表示目标账户类型，１表示多签地址，０表示普通账户地址 注意，origin与dest不能同时为0
+&#160;&#160;&#160;&#160;&#160;&#160;Indicates the target account type, 1 indicates the multi-signature address, and 0 represents the general account address. Note that origin and dest cannot be 0 at the same time
 
-3）、transfer中的origin与dest的设定，要与from/signatures/to相对应
+3) The settings of origin and dest in transfer should correspond to from/signatures/to
 
-&#160;&#160;&#160;&#160;&#160;&#160;I、若origin是0，则from中存放签发者的公钥，注意from是一个数组，即
-便里面只放一个公钥，也是一个数组格式
+&#160;&#160;&#160;&#160;&#160;&#160;I、If origin is 0, then from stores the issuer's public key. Note that from is an array. Even if there is only one public key in it, it is also an array format
 
-&#160;&#160;&#160;&#160;&#160;&#160;II、若origin是1，则from中存放多签规则成员的公钥数组，signatures中
-则为相应的签名数组，from中的公钥与signatures中的签名顺序一一对应，但不需要与规则定义中的顺序保持一致
+&#160;&#160;&#160;&#160;&#160;&#160;II、If origin is 1, the public key array of multi-signature rule members is stored in from, and the corresponding signature array is in signatures. The public key in from corresponds to the signature order in signatures, but it does not need to be consistent with the order in rule definition
 
-4）、from
+4) from
 
-&#160;&#160;&#160;&#160;&#160;&#160;根据来源账户类型的不同有不同的定义：
+&#160;&#160;&#160;&#160;&#160;&#160;There are different definitions according to the type of source account:
 
-&#160;&#160;&#160;&#160;&#160;&#160;I、来源是多签地址，则表示是部署的多签规则对应的“公钥”
+&#160;&#160;&#160;&#160;&#160;&#160;I、If the source is a multi-signature address, it means that it is the "public key" corresponding to the deployed multi-sign rule
 
-&#160;&#160;&#160;&#160;&#160;&#160;II、来源是普通账户地址，则表示普通账户地址对应的公钥
+&#160;&#160;&#160;&#160;&#160;&#160;II、If the source is a common account address, it represents the public key corresponding to the general account address
 
-&#160;&#160;&#160;&#160;&#160;&#160;III、以上两种情况都需要校验公钥的合法性以及存在性
-注意，这是一个数组
+&#160;&#160;&#160;&#160;&#160;&#160;III、In both above cases, the validity and existence of public key need to be verified
+Notice that this is an array
 
-5）、signatures[]
+5) signatures[]
 
-&#160;&#160;&#160;&#160;&#160;&#160;存储签名数组
+&#160;&#160;&#160;&#160;&#160;&#160;Store signature array
 
-&#160;&#160;&#160;&#160;&#160;&#160;I、若是单个地址签发到多签地址，则是一个签名
+&#160;&#160;&#160;&#160;&#160;&#160;I、If a single address is signed to multiple addresses, it is a signature
 
-&#160;&#160;&#160;&#160;&#160;&#160;II、若是多签地址签发，则是多个签名（无顺序要求）
+&#160;&#160;&#160;&#160;&#160;&#160;II、If multi-signatures are issued, there are multiple signatures (no order).
 
-6）、多签规则的使用，只能是面向部署时定义的公钥账户范围，注意这里说的是签发转账时签名账户。
+6) Multi-signature rules can only be used in the public key account range defined during deployment. Note that the signature account is used when signing and transferring.
 
-&#160;&#160;&#160;&#160;&#160;&#160;I、普通账户地址转多签，普通账户地址必须是定义在多签规则中的，只有从多签
-转出才需要限定地址范围，必须属于多签规则的定义
+&#160;&#160;&#160;&#160;&#160;&#160;I、Ordinary account address transfer multi-signature, ordinary account address must be defined in the multi-signature rule, only from multi-signature transfer need to limit the address range, must belong to the definition of multi-signature rule
 
-&#160;&#160;&#160;&#160;&#160;&#160;II、多签转多签，两者之间没什么约束关系
+&#160;&#160;&#160;&#160;&#160;&#160;II、Multi-signature to multi-signature, there is no constraint relationship between the two
 
-&#160;&#160;&#160;&#160;&#160;&#160;III、多签转普通账户，两者之间没什么约束关系
+&#160;&#160;&#160;&#160;&#160;&#160;III、Multi-signature to ordinary account, there is no constraint relationship between the two
 
+7) to
 
-7）、to
+&#160;&#160;&#160;&#160;&#160;&#160;Represents the public key hash corresponding to the destination address
 
-&#160;&#160;&#160;&#160;&#160;&#160;表示目的地址所对应的公钥哈希
+&#160;&#160;&#160;&#160;&#160;&#160;I、If the target address is an ordinary account, it means the public key hash of the ordinary account.
 
-&#160;&#160;&#160;&#160;&#160;&#160;I、若目标地址是普通账户，则表示普通账户的公钥哈希
+&#160;&#160;&#160;&#160;&#160;&#160;II、If the target address is a multi-sign account, it means the "public key hash" of the multi-sign rule
 
-&#160;&#160;&#160;&#160;&#160;&#160;II、若目标地址是多签账户，则表示多签规则的“公钥哈希”
+&#160;&#160;&#160;&#160;&#160;&#160;III、In both above cases, the validity and existence of public key need to be verified
 
-&#160;&#160;&#160;&#160;&#160;&#160;III、以上两种情况都需要校验公钥的合法性以及存在性
+8) value,Transfer amount
 
-8）、value,转账金额
+&#160;&#160;&#160;&#160;&#160;&#160;I、Cannot be 0
 
-&#160;&#160;&#160;&#160;&#160;&#160;I、不能为0
-  
-&#160;&#160;&#160;&#160;&#160;&#160;II、不能为负数
+&#160;&#160;&#160;&#160;&#160;&#160;II、Cannot be negative
 
-&#160;&#160;&#160;&#160;&#160;&#160;III、必须小于等于from指定账户的余额
+&#160;&#160;&#160;&#160;&#160;&#160;III、Must be less than or equal to the balance of the specified account from
 
-&#160;&#160;&#160;&#160;&#160;&#160;IV、第3条，注意是校验对应资产的余额
+&#160;&#160;&#160;&#160;&#160;&#160;IV、Article 3: check the balance of corresponding assets
 
-9）、在构造事务时payload里的签名原文nonce为构造事务from的当前nonce
+9) When constructing a transaction, the original signature nonce in payload is the current nonce of constructing transaction from
 
-10）、pubkeyHash,表示公钥哈希组
+10) pubkeyHash,Represents a public key hash group
 
-&#160;&#160;&#160;&#160;&#160;&#160;I、必须是合法公钥哈希
+&#160;&#160;&#160;&#160;&#160;&#160;I、Must be a legal public key hash
 
-&#160;&#160;&#160;&#160;&#160;&#160;II、必须和pubkeys保持对应的一致
+&#160;&#160;&#160;&#160;&#160;&#160;II、It must be consistent with pubkeys
 
-&#160;&#160;&#160;&#160;&#160;&#160;III、部署规则时，一旦部署，不能更改数组中的公钥哈希排列顺序
+&#160;&#160;&#160;&#160;&#160;&#160;III、When deploying rules, once deployed, the public key hash order in the array cannot be changed
 
-&#160;&#160;&#160;&#160;&#160;&#160;IV、进行多签时，不用遵守排列顺序，但第一个元素必须与事务签发者必须保持一致
+&#160;&#160;&#160;&#160;&#160;&#160;IV、When multi-signing, the first element must be consistent with the transaction signer without following the order of arrangement
 
-&#160;&#160;&#160;&#160;&#160;&#160;1、当多签规则向其他地址转发时，可以由多签规则中定义 的任何一个账户先行发起签名，其他账户也进行签名，最终将签名完成的事务广播到节点等待打包即可。
+Key points of process
 
-&#160;&#160;&#160;&#160;&#160;&#160;2、尤其注意，构造规则函数调用的事务结构的时候，事务数据结构中的from与to的定义，与规则函数中的from以及to,并不总是一致的，情形如下：
+&#160;&#160;&#160;&#160;&#160;&#160;1、When the multi-signature rule is forwarded to other addresses, any account defined in the multi-signature rule can initiate the signature first, and other accounts can also sign. Finally, the transaction completed by the signature will be broadcast to the node for packaging.
 
-|from类型| 普通|多签|多签|普通
+&#160;&#160;&#160;&#160;&#160;&#160;2、In particular, when constructing a transaction structure called by a rule function, the definitions of from and to in the transaction data structure are not always consistent with those in the rule function, as follows:
+
+|<div style="width:105pt">from type</div> | ordinary|multi- signature|multi- signature|<div style="width:50pt">ordinary</div> 
 |:----:|:----:|:----:|:----:|:----:
-|<b>to类型</b>| <b>普通</b>|<b>多签</b>|<b>普通</b>|<b>普通</b>
-|事务中的from | 普通地址的公钥以及签名数据|多签规则定义范围中的任意一个普通账户公钥和签名|多签规则定义范围中的任意一个普通账户公钥和签名|<font color=red>X</font>
-|事务中的to|多签规则的“公钥哈希”|多签规则的“公钥哈希”|多签规则的“公钥哈希”|<font color=red>X</font>
-|规则函数中的from|同"事务中的from"|公钥数组|公钥数组| <font color=red>X</font>
-|规则函数中的to|同"事务中的to"|普通地址的公钥哈希|多签地址的“公钥哈希”|<font color=red>X</font>
+|<b>to type</b>| <b>ordinary</b>|<b>multi- signature</b>|<b>ordinary</b>|<b>ordinary</b>
+|from in transaction | Public key and signature data of ordinary address|Public key and signature of any common account in the definition scope of multi- signature rule|Public key and signature of any common account in the definition scope of multi- signature rule|<font color=red>X</font>
+|to in transaction|Public key hash of multi- signature rules|Public key hash of multi- signature rules|Public key hash of multi- signature rules|<font color=red>X</font>
+|from in rule function|Same as "from in transaction"|Public key array|Public key array| <font color=red>X</font>
+|to in rule function|Same as "to in transaction"|Public key hash of ordinary address|Public key hash of multi- signature address|<font color=red>X</font>
 
-&#160;&#160;&#160;&#160;&#160;&#160;3、多签调用后，状态值更新逻辑如下：
+&#160;&#160;&#160;&#160;&#160;&#160;3、After calling multi-signatures, the update logic of status value is as follows:
 
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;I、多签规则具备5个状态值，一旦定义，只有余额是可根据规则函数变更的；
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;I、Multi- signature rules have five status values. Once defined, only the balance can be changed according to the rule function;
 
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;II、多签规则代表的地址与普通地址之间互转时，各自的余额会发生变化；
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;II、When the address represented by the multi-signature rule is exchanged with the ordinary address, the respective balance will change;
 
-&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;III、注意，比如多签地址转普通地址，对于多签地址来说，变更的是多签规则
-中的amount余额，与组成多签的具体的普通账户余额没有关系。
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;III、Note: for example, if multi- signature addresses are converted to ordinary addresses, the change is the amount balance in the multi- sign rule, which has nothing to do with the specific general account balance that constitutes the multi- sign address.
 
-## 12.6 哈希锁定
-&#160;&#160;&#160;&#160;&#160;&#160;当一笔支付需要满足到某个条件是时候才能被触发，称之为条件支付。＂哈希时间锁定＂就是一种条件，区块高度锁定支付也是一种支付。支付对于区块链来说，就是一种事务结构，验证通过并且入块后即资产发生转移，然而资产发生了转移不代表目的方就可以立即使用，在计算到自己的余额中时，会判断是否符合了条件。
-
-### 12.6.1 哈希&时间锁定支付
-#### 12.6.1.1 语法格式
-```json
-{
-　　"HASHTIMELOCK_RULE":{
-　　　　"asset160hash":[],
-　　　　"pubkeyhash":[]
-　　}
-}
-```
-|编号| 规则函数|备注
-|:----:|---|:----:|
-|1|```"transfer"{ value":"50", ;"hashresult":"", "timestamp":"" }```|转发资产
-|2|```"get":{ "transferhash":"", "origintext":"" }```|获得锁定资产
-
-#### 　　12.6.1.2  规则属性
-1、asset160hash，是指资产的hash160值
-
-&#160;&#160;&#160;&#160;&#160;&#160;校验要点：
-
-&#160;&#160;&#160;&#160;&#160;&#160;1）、若是WDC，此处全部填0
-
-&#160;&#160;&#160;&#160;&#160;&#160;2）、若是自定义资产，则需校验区块中是否存在
-
-&#160;&#160;&#160;&#160;&#160;&#160;3）、在一个区块中，不能同时包含锁定规则部署以及对资产的转发事务
-
-２、Pubkeyhashs，是指目标账户地址的公钥哈希
-
-&#160;&#160;&#160;&#160;&#160;&#160;1）、仅支持普通账户地址的公钥哈希
-
-&#160;&#160;&#160;&#160;&#160;&#160;2）、必须是合法的公钥哈希，比如长度为160位，可转化为正常前缀的地址
-
-####  12.6.1.3 规则函数
-|编号 | 规则函数|校验要点
-|:----:|---|---|
-|1|```"transfer"{ "value":"50", "hashresult":"", "timestamp":"" }```|1、校验发送方对应资产的余额是否足够  <br>2、金额必须是数字，并且符合精度 <br>3、事务数据的from部分表明是签发方  <br>4、规则的部署账户与签发账户可以不是同一个 <br>5、hashresult,是指某个原文的256哈希值 <br>&#160;&#160;&#160;&#160;&#160;&#160;1）、这是一个初始的值，部署规则的时候需要制定  <br>&#160;&#160;&#160;&#160;&#160;&#160;2）、需要校验是256位长度  <br>6、blockheight,是指定的高度 <br>&#160;&#160;&#160;&#160;&#160;&#160;1）、必须大于等于0并且是整数 <br>&#160;&#160;&#160;&#160;&#160;&#160;2）、可以指定比当前更大的高度 <br>&#160;&#160;&#160;&#160;&#160;&#160;3）、如果高度小于等于当前高度，表示转发后立即激活 <br>&#160;&#160;&#160;&#160;&#160;&#160;4）、大于等于指定高度时，解锁有效
-|2|``` "get":{ "transferhash":"", "origintext":"" }```|1、transferhash是指签发事务的哈希 <br>2、origintext是指原文，用来验证是否能得到同样的哈希值 <br>3、哈希以及时间都验证成功后，更新目标账户地址余额 <br>4、当前区块的最小可能时间戳必须大于等于规则中的时间戳 <br>5、必须是规则部署中的pubkeyhash才可以签发get规则的事务
-
-### 12.6.2哈希＆区块高度锁定支付
-#### 12.6.2.1 语法格式
-```json
-{
-    "HASHHEIGHTLOCK_RULE":{
-       "asset160hash":[],
-       "pubkeyhash":[]
-    }
-}
-```
-|编号| 规则函数|备注
-|:----:|---|:----:|
-|1|```"transfer"{ "value":"50", "hashresult":"", "blockheight":"" }```|转发资产
-|2|```"get":{ "transferhash":"", "origintext":"" }``` |获得锁定资产　
-
-#### 　　12.6.2.2  规则属性
-1、asset160hash，是指资产的hash160值
-
-&#160;&#160;&#160;&#160;&#160;&#160;校验要点：
-
-&#160;&#160;&#160;&#160;&#160;&#160;1）、若是WDC，此处全部填0
-
-&#160;&#160;&#160;&#160;&#160;&#160;2）、若是自定义资产，则需校验区块中是否存在
-
-&#160;&#160;&#160;&#160;&#160;&#160;3）、在一个区块中，不能同时包含锁定规则部署以及对资产的转发事务
-
-２、Pubkeyhashs，是指目标账户地址的公钥哈希
-
-&#160;&#160;&#160;&#160;&#160;&#160;1）、仅支持普通账户地址的公钥哈希
-
-&#160;&#160;&#160;&#160;&#160;&#160;2）、必须是合法的公钥哈希，比如长度为160位，可转化为正常前缀的地址
-
-####  12.6.2.3 规则函数
-|编号 | 规则函数|校验要点
-|:----:|---|---|
-|1|```"transfer"{ "value":"50", "hashresult":"", "blockheight":"" }```|1、校验发送方对应资产的余额是否足够 <br>2、金额必须是数字，并且符合精度 <br>3、事务数据的from部分表明是签发方  <br>4、规则的部署账户与签发账户可以不是同一个 <br>5、hashresult,是指某个原文的256哈希值 <br>1）、这是一个初始的值，部署规则的时候需要制定  <br>2）、需要校验是256位长度  <br>6、blockheight,是指定的高度 <br>1）、必须大于等于0并且是整数 <br>2）、可以指定比当前更大的高度 <br>3）、如果高度小于等于当前高度，表示转发后立即激活 <br>4）、大于等于指定高度时，解锁有效
-|2|```"get":{ "transferhash":"","origintext":"" }```|1、transferhash是指签发事务的哈希 <br>2、origintext是指原文，用来验证是否能得到同样的哈希值 <br>3、哈希以及时间都验证成功后，更新目标账户地址余额 <br>4、当前区块的最小可能时间戳必须大于等于规则中的时间戳 <br>5、必须是规则部署中的pubkeyhash才可以签发get规则的事务
-
-## 12.7 定额条件比例支付
-
-基本逻辑如下
-
-1）、某个地址转入锁定规则一定总额，假设1000
-
-2）、转入规则中的总额仍然是属于用户自己的
-
-3）、规则中可以设定允许转出的比例以及触发转出的高度变化
-
-4）、规则中也可以设定定向的目标地址（可选参数）
-
-5）、允许转出的比例金额与总金额之间是倍数关系，不能发生除不尽
-
-6）、转出比例是相对于转入的总额来计算的，而不是每一次转出后的余额
-
-### 12.7.1 语法格式
-```json
-{
-    "RATEHEIGHTLOCK _RULE": {
-        "asset160hash":[],
-        "onetimedepositmultiple":Integer,
-        "withdrawperiodheight":Long,
-        "withdrawrate":Double,
-        "dest":[],
-        "stateMap":[
-            deposithash -> Extract类 ,
-            ......
-        ]
-    }
-}
-```
-
-### 12.7.2 规则属性
-1、asset160hash
-
-资产的160哈希<br><font color=orange>在本次功能实现中，仅支持WDC，校验时此处必须全部为0，代码内部是支持非WDC资产，确保资产是否存在，校验暂只支持WDC</font>
-
-2、onetimedepositmultiple
-
-每次往规则转入对应资产的倍数关系。<br> color=orange>例如100，则每次必须按照100的倍数转入，最小为100，其他情况同理
-<br>注意：<font color=orange>
-<br>1）、不能为负数、0以及1<br>2）、不能是小数<br>3）、不能大于1亿</font>
-
-3、withdrawperiodheight
-<br>
-资产的提取高度周期，比如10，则表示资产转入后，每10个高度才能提取一次
-假设资产在第9个高度转入，则在第20个高度才能提取，依此往后推，下一次高度在31可以提取
-
-注意，按照高度的提取是一条条处理的，也就是说，即使中间某个高度没有提取，比如第20个高度没有提取，则往后的时候，并不能合并所有的余额一次性提
-<br><font color=orange>
-1）、高度周期不能是0
-<br>
-2）、必须为正整数
-<br>
-3）、不能超过无符号32位整数的最大值
-</font>
-
-4、withdrawrate
-<br>
-提取比率
-<br>
-在符合高度条件时，只能是提取转入金额的指定比率，比如转入1000，按照一次10%提取，则每次只能是提取100
-注意了，不同的转入之间是独立的，比如分别转入过1000和2000，则提取时也是分别的提取
-<br>
-<font color=orange>
-1）、比率使用百分比表示，比如10%，5%，0.5%等，实际存储可以只放分子部分，分子部分不能大于等于100
-<br>
-2）、最小转入金额与提取比率的乘积，不能超出精度表示
-<br>
-3）、比率的设定，必须保证能够最终全部提取完毕，并且每次提取的金额是一样大小。参照算法：使用最小转入金额乘以比率得到结果s1，然后最小转入金额模s1，若结果为0则没有问题
-<br>
-4）、节点接收到的是不带%号的比率，小数点位数最大8位
-</font>
-
-注意：
-每个用户在进行转入和提取后，都会保留状态，保存用户某笔转入的可提取余额，以便于校验
-
-4、dest
-<br>
-目标地址，若为0则表示可以转出到任意地址<br>若指定，则只能约束为提取到指定地址<br>存储为地址哈希
-
-注意：无论此字段如何设置，用户转入规则中的资产，总是可以提取到转入时的源地址，相当于可以撤销转入，但是必须按照规则中的高度周期与提取比率进行。
-
-5、stateMap
-<br>
-每笔转入金额明细，Key-Value形式存储
-<br>
-Key是转入的事务hash
-<br>
-Value是Extract类，每次发送提取事务会更新最新提取高度和剩余次数，初始化是最高次数
-
-```
-Extract{
-    extractheight:,//最新提取高度 long
-    surplus://剩余次数 int
-}
-```
-
-每次提取后，surplus会相应减一，surplus为0，表示都已提取完并清除该条记录
-
-
-### 12.7.3 规则函数
-
-1、转入
-```
-"deposit": {
-        "value": 50
-    }
-```
-表明用户转入指定金额
-<br>1）、注意不能大于用户对应资产的可使用余额<br>2）、必须符合规则的倍数要求
-
-2、提取
-```
-"withdraw": {
-        "deposithash":,  //转入的事务hash
-        "to":   //公钥哈希，可能是普通账户也可能是多签
-    }
-```
-
-1）、根据规则校验to的赋值是否符合约束条件
-
-2）、确保deposithash是存在的
-
-3）、发送deposit的from和发送withdraw的from保持一致，A发送deposit事务，只有A才能发送withdraw事务
-
-### 12.7.4  事务隔离
-
-1、规则必须已经部署后才能调用，部署事务与调用事务不能在同一个区块
-
-2、deposit与withdraw，若是关联事务，也就是说withdraw的是同一个区块中的deposit，则不被允许
-
-
-
-
+## 12.6 Hash Locking
+&#160;&#160;&#160;&#160;&#160;&#160;When a payment needs to meet a certain condition to be triggered, it is called conditional payment. "Hash time locking" is a condition, and block high locking payment is also a kind of payment. For blockchain, payment is a kind of transaction structure. After the verification is passed and the asset is transferred into the block, however, the transfer of the asset does not mean that the target party can use it immediately. When the asset is calculated into its own balance, it will judge whether it meets the condit

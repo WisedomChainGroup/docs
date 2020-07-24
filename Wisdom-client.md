@@ -1,14 +1,14 @@
-# 二、WisdomChain客户端
-## 2.1 客户端种类
-&#160;&#160;&#160;&#160;&#160;&#160;全节点和矿工节点
-## 2.2 核心节点部署
-### 2.2.1 配置网络防火墙
-&#160;&#160;&#160;&#160;&#160;&#160;WisdomChain P2P和RPC默认端口均为19585，在docker容器端口映射时，可根据需求修改。请根据需求修改网络防火墙设置，决定是否开放该端口。
+# 2. WisdomChain Client
+## 2.1 Client Type
+&#160;&#160;&#160;&#160;&#160;&#160;Full nodes and miner nodes
+## 2.2 Core Node Deployment
+### 2.2.1 Configure Network Firewall
+&#160;&#160;&#160;&#160;&#160;&#160;The default port of WisdomChain P2P and RPC is 19585, which can be modified according to the requirements when the docker container port is mapped. Please modify the network firewall settings as required to decide whether to open the port.
 
-### 2.2.2服务器硬件
-&#160;&#160;&#160;&#160;&#160;&#160;磁盘空间建议 500GB，内存16GB，CPU 8核。
+### 2.2.2 Server Hardware
+&#160;&#160;&#160;&#160;&#160;500GB of disk space, 16GB of memory, and 8 cores of CPU are recommended.
 
-### 2.2.3安装docker、docker-compose
+### 2.2.3 Install docker、docker-compose
 
 #### 	2.2.3.1 Ubuntu
 
@@ -26,14 +26,15 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-### 2.2.4 Docker镜像地址
-&#160;&#160;&#160;&#160;&#160;&#160;		节点程序镜像：wisdomchain/wdc_core
+### 2.2.4 Docker Mirror Address
+&#160;&#160;&#160;&#160;&#160;&#160;		Node program mirroring：wisdomchain/wdc_core
 
 &#160;&#160;&#160;&#160;&#160;&#160;
-数据库镜像：wisdomchain/wdc_pgsql
+Database mirroring：wisdomchain/wdc_pgsql
 
-### 2.2.5 wdc.yml文件示例
-<font color=red>* 以下内容为示例性内容，实际部署时，卷映射、环境变量、端口映射等根据实际情况，需要调整。</font>
+### 2.2.5 wdc.ymlFile Example
+<font color=red>* The following content is sample content. During actual deployment, volume mapping, environment variables, port mapping, etc. need to be adjusted according to the actual situation.</font>
+
 ```yml
 version: '3.1'
 
@@ -45,7 +46,7 @@ services:
         container_name: wdc_pgsql
         privileged: true
         volumes:
-            -/opt/wdc_pgsql:/var/lib/postgresql/data # pgsql 数据目录
+            -/opt/wdc_pgsql:/var/lib/postgresql/data # pgsql Data catalog
         ports:
             -127.0.0.1:5433:5432
         environment:
@@ -60,7 +61,7 @@ services:
         container_name: wdc_core
         privileged: true
         volumes:
-            -/opt/wdc_logs:/logs #程序日志目录
+            -/opt/wdc_logs:/logs #Program log directory
             -/opt/wdc_leveldb:/leveldb
             -./entry_point.sh:/entry_point.sh
             -/opt/ipc:/root/ipc
@@ -71,7 +72,7 @@ services:
             -19585:19585
             -9585:9585
         environment:
-            LOGGING_CONFIG: 'https://wisdom-config.oss-cn-hangzhou.aliyuncs.com/public-chain/logback.xml' #如发现LOGGING_CONFIG相关路径报错，可以去除此项
+            LOGGING_CONFIG: 'https://wisdom-config.oss-cn-hangzhou.aliyuncs.com/public-chain/logback.xml' #If an error is reported in the related path of LOGGING_CONFIG, this item can be removed
             DATA_SOURCE_URL: 'jdbc:postgresql://wdc_pgsql:5432/postgres'
             DB_USERNAME: 'replica'
             DB_PASSWORD: 'replica'
@@ -86,50 +87,50 @@ services:
             DATABASE_DIRECTORY: '/leveldb'
 ```
 
-### 2.2.6 卷映射（volumes）
-&#160;&#160;&#160;&#160;&#160;&#160;可根据需要，映射到不同的目录。
+### 2.2.6 Volume Mapping（volumes）
+&#160;&#160;&#160;&#160;&#160;&#160;Map to different directories as needed.
 
-&#160;&#160;&#160;&#160;&#160;&#160;其中，wdc_pgsql volumes映射的是PostgreSql数据库数据目录，docker容器删除后，该目录不会自动删除，节点数据仍然保留。如果想要全新启动WDC Core，请备份该目录后，删除或清空该目录。
+&#160;&#160;&#160;&#160;&#160;&#160;Where, wdc_pgsql volumes maps the PostgreSql database data directory. After the docker container is deleted, the directory will not be deleted automatically, and the node data is still retained. If you want to restart WDC Core completely, after backing up the directory, delete or empty the directory.
 
-&#160;&#160;&#160;&#160;&#160;&#160;wdc_core volumes映射的是WDC Core节点程序日志目录。
+&#160;&#160;&#160;&#160;&#160;&#160;wdc_core volumes maps the WDC Core node program log directory.
 
-&#160;&#160;&#160;&#160;&#160;&#160;容器内部的一些文件，也可以根据需要映射到宿主机目录。比如wdc_core容器内部的/fast-sync，可以映射为： /opt/fast-sync:/fast-sync。
+&#160;&#160;&#160;&#160;&#160;&#160;Some files inside the container can also be mapped to the host directory as required.For example, /fast-sync in wdc_core container can be mapped to /opt/fast-sync:/fast-sync.
 
-### 2.2.7 网络端口映射（ports）
-&#160;&#160;&#160;&#160;&#160;&#160;wdc_pgsql的端口映射，为了保障安全，建议映射到IP地址127.0.0.1，只允许本机访问。如果不想通过外部客户端访问数据库，也可以去掉该端口映射。
+### 2.2.7 Network Port Mapping（ports）
+&#160;&#160;&#160;&#160;&#160;&#160;In order to ensure security, it is recommended to map the port of wdc_pgsql to IP address 127.0.0.1 and only allow local access. If you do not want to access the database through an external client, you can also remove the port mapping.
 
-&#160;&#160;&#160;&#160;&#160;&#160;wdc_pgsql和wdc_core的外部端口号，可根据需求修改。
+&#160;&#160;&#160;&#160;&#160;&#160;External port number of wdc_pgsql and wdc_core, which can be modified according to the demand
 
-### 2.2.8 环境变量（environment）
-&#160;&#160;&#160;&#160;&#160;&#160;数据库用户名密码可以自定义，但要保证WDC_POSTGRES_USER与DB_USERNAME保持一致，WDC_POSTGRES_PASSWORD与DB_PASSWORD一致
+### 2.2.8 Environment Variable（environment）
+&#160;&#160;&#160;&#160;&#160;&#160;The database user name and password can be customized, but it is necessary to ensure that WDC_POSTGRES_USER and DB_USERNAME are consistent, and WDC_POSTGRES_PASSWORD and DB_PASSWORD are consistent.
 
-&#160;&#160;&#160;&#160;&#160;&#160;ENABLE_MINING 表示是否启动挖矿
+&#160;&#160;&#160;&#160;&#160;&#160;ENABLE_MINING indicates whether mining is started.
 
-&#160;&#160;&#160;&#160;&#160;&#160;WDC_MINER_COINBASE 为挖矿coinbase地址，必须设置，否则节点无法启动。生成地址的方法参见下一节“矿工地址生成”
+&#160;&#160;&#160;&#160;&#160;&#160;WDC_MINER_COINBASE is the mining coinbase address, which must be set, otherwise the node cannot be started. See the next section "miner address generation" for the method of generating address.
 
-&#160;&#160;&#160;&#160;&#160;&#160;DATA_SOURCE_URL 的值，利用docker容器互联，不必修改。如果需要修改，需确保URL中的主机名为pgsql容器名，端口与pgsql容器内部的数据库端口相同
+&#160;&#160;&#160;&#160;&#160;&#160;The value of  DATA_SOURCE_URL is interconnected with the docker container and does not need to be modified. If you need to modify, make sure that the host name in the URL is pgsql container name, and the port is the same as the database port inside the pgsql container.
 
-&#160;&#160;&#160;&#160;&#160;&#160;BOOTSTRAPS：种子节点列表，英文逗号分隔
+&#160;&#160;&#160;&#160;&#160;&#160;BOOTSTRAPS：List of seed nodes, comma separated.
 
-&#160;&#160;&#160;&#160;&#160;&#160;ENABLE_DISCOVERY：是否允许节点发现，true/false
+&#160;&#160;&#160;&#160;&#160;&#160;ENABLE_DISCOVERY：Whether the node discovery is allowed，true/false.
 
-&#160;&#160;&#160;&#160;&#160;&#160;P2P_ADDRESS：自己节点ip、port
+&#160;&#160;&#160;&#160;&#160;&#160;P2P_ADDRESS：Own node ip、port.
 
-&#160;&#160;&#160;&#160;&#160;&#160;ports：9585是p2p端口，19585是rpc端口
+&#160;&#160;&#160;&#160;&#160;&#160;ports：9585 is p2p port and 19585 is rpc port.
 
-&#160;&#160;&#160;&#160;&#160;&#160;MAX_BLOCKS_PER_TRANSFER：最大同步区块数（官方建议默认256）
+&#160;&#160;&#160;&#160;&#160;&#160;MAX_BLOCKS_PER_TRANSFER：Maximum number of synchronization blocks (256 by default is recommended).
 
-&#160;&#160;&#160;&#160;&#160;&#160;FAST_SYNC_DIRECTORY: '/fast-sync'：快照文件路径（此路径为容器内的路径，需要与wdc.yml中配置volumes下的保持一致）
+&#160;&#160;&#160;&#160;&#160;&#160;FAST_SYNC_DIRECTORY: '/fast-sync'：Snapshot file path (this path is the path within the container, which needs to be consistent with the mapping path under the configured volumes in wdc.yml).
 
-&#160;&#160;&#160;&#160;&#160;&#160;DATABASE_DIRECTORY: '/leveldb'：leveldb存储路径（此路径为容器内的路径，需要与wdc.yml中配置volumes下的保持一致）
+&#160;&#160;&#160;&#160;&#160;&#160;DATABASE_DIRECTORY: '/leveldb'：leveldb Storage path (this path is the path within the container, which needs to be consistent with the mapping path under the configured volumes in wdc.yml.
 
-### 2.2.9 矿工地址生成
-&#160;&#160;&#160;&#160;&#160;&#160;使用手机APP生成地址。APP可在官网下载： https://www.wisdchain.com/
+### 2.2.9 Miner Address Generation
+&#160;&#160;&#160;&#160;&#160;&#160; Use mobile app to generate address. App can be downloaded on the official website: https://www.wisdchain.com/
 
-&#160;&#160;&#160;&#160;&#160;&#160;目前下载页面为： https://www.wisdchain.com/user/application_1
+&#160;&#160;&#160;&#160;&#160;&#160;Currently, the download page is:  https://www.wisdchain.com/user/application_1
 
-### 2.2.10 准备entry_point.sh
-&#160;&#160;&#160;&#160;&#160;&#160;wdc.yml文件中，wdc_core服务的入口脚本内容：
+### 2.2.10 Prepare entry_point.sh
+&#160;&#160;&#160;&#160;&#160;&#160;In the wdc.yml file, the entry script content of the wdc_core service:：
 
 ```shell
 #!/bin/bash
@@ -180,13 +181,13 @@ eval $CMD
 
 ```
 
-### 2.2.11 数据快照：
-数据快照下载链接：https://wisdom-backup.oss-cn-beijing.aliyuncs.com/fast-sync.zip
-<br>解压并把快照文件放入（官方建议，有需要可以自定义路径，在wdc.yml中修改）/opt/fast-sync路径下。
-<br>如有新数据快照请关注官方公众号。
+### 2.2.11 Data Snapshot：
+Data snapshot download link:https://wisdom-backup.oss-cn-beijing.aliyuncs.com/fast-sync.zip
+<br>Unzip and put the snapshot file in (official suggestion, you can customize the path and modified in wdc.yml if necessary) /opt/fast-sync path.
+<br>If you have new data snapshots, please follow the official account.
 
-### 2.2.12 启动docker镜像
-&#160;&#160;&#160;&#160;&#160;&#160;更新镜像：
+### 2.2.12 Start Docker Image
+&#160;&#160;&#160;&#160;&#160;&#160;Update image：
 ```
 docker pull wisdomchain/wdc_core
 	
@@ -195,33 +196,33 @@ docker pull wisdomchain/wdc_pgsql
 docker-compose -f wdc.yml up -d
 ```
 
-### 2.2.13 查看日志
-&#160;&#160;&#160;&#160;&#160;&#160;命令 docker logs -f <CONTAINER ID> 查看节点程序控制台输出/opt/wdc_logs目录为节点程序日志文件目录，如果再YML文件映射到了其他目录，请到相应目录查看。
+### 2.2.13 View Log
+&#160;&#160;&#160;&#160;&#160;&#160;Command docker logs -f <CONTAINER ID> to view the output of the node program console. By default, directory /opt/wdc_logs is the node program log file directory mapped by volumes in the wdc.yml configuration file. If you have customized the path, go to the corresponding directory to view it.
 
-## 2.3 节点启动流程
+## 2.3 Node Start Process
 
 ```
-//停止并删除容器，确保节点没有启动
+//Stop and delete the container, make sure the node is not started
 docker-compose -f wdc.yml down
 
-//获得最新版本镜像
+//Get the latest version image
 docker pull wisdomchain/wdc_core
 
-//修改wdc.yml，如果有必要的话
+//Modify wdc.yml , if necessary
 
-//启动新版镜像
+//Start new version image
 docker-compose -f wdc.yml up -d
 ```
-## 2.4 一键部署
-### 2.4.1 部署准备工作
-&#160;&#160;&#160;&#160;&#160;&#160;官方指定操作系统为Linux ubuntu18+64位，准备好操作系统后需要先安装部署Python，Python最低版本3.8.0，安装成功后用python3.8 --version查看安装是否正常（安装方式不同，指令根据安装方式查看）
+## 2.4 One-Click Deployment
+### 2.4.1 Deployment Preparation
+&#160;&#160;&#160;&#160;&#160;&#160;The official operating system is Linux ubuntu18+64 bit. After you prepare the operating system, you need to install and deploy Python. The minimum version of Python is 3.8.0. After the installation is successful, use Python 3.8 -- version to check whether the installation is normal (the installation mode is different, and the instructions are checked according to the installation mode).
 </br>
 ![python-path](img/path.png)
 
-&#160;&#160;&#160;&#160;&#160;&#160;安装docker、docker-compose,具体安装步骤可参考 2.2.3安装docker、docker-compose
+&#160;&#160;&#160;&#160;&#160;&#160;Install docker and docker compose. For specific installation steps, please refer to 2.2.3 to install docker and docker compose.
 
-### 2.4.2 自动化部署
-注:选用root或有管理员权限的用户执行下面的部署
+### 2.4.2 Automated Deployment
+Note: select root or a user with administrator rights to perform the following deployment
 ```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -468,63 +469,33 @@ def usePlatform():
 main()
 ```
 
-把Main.py放入到服务器相应文件下后，执行python3.8 Main.py<br>A.出现”<font color=green>Welcome to deploy the WDC node!</font>”表示程序启动成功<br>
-B.下面的步骤会自动下载快速同步区块和相应启动脚本<br>
-C.出现以下字段需要用户配置，按回车键继续（注意输入不要留空格）
-<br>&#160;&#160;&#160;&#160;&#160;&#160;<font color=green>ENABLE_MINING(true/false): #表示节点是否挖矿，true是启动，false是不启动
-<br>&#160;&#160;&#160;&#160;&#160;&#160;WDC_MINER_COINBASE: #表示矿工地址，用WisdomChain工具或钱包生成WisdomChain 2.0版本地址（只支持带前缀“WX”），如果之前的ENABLE_MINING是false,不会有这提示
-<br>&#160;&#160;&#160;&#160;&#160;&#160;P2P_ADDRESS: #表示节点IP地址
-<br>&#160;&#160;&#160;&#160;&#160;&#160;	  格式示例为：wisdom://192.168.1.57:9585
-<br>&#160;&#160;&#160;&#160;&#160;&#160;	  矿工节点IP地址设置外网IP，全节点可以设置外/内网IP，9585端口是默认端口，如果不是9585，需要在wdc.yml修改端口映射</font>
-<br>&#160;&#160;&#160;&#160;&#160;&#160;如果需要配置其他参数，可以等部署完后再自行修改，具体参数参考 2.2.8 环境变量
-<br>D.出现“<font color=green>WDC node deployment successful!</font>”表示部署成功
-正常部署界面示例如下：	
+After putting Main.py into the corresponding file of the server, execute python3.8 Main.py<br>A.”<font color=green>Welcome to deploy the WDC node!</font>”indicates that the program is started successfully<br>
+B.The following steps will automatically download the quick sync block and the corresponding startup script<br>
+C.The following fields need to be configured by the user. Press enter to continue (note that no space is left for input)
+<br>&#160;&#160;&#160;&#160;&#160;&#160;<font color=green>ENABLE_MINING(true/false): #Indicates whether the node is mining. True is start, false is not start
+<br>&#160;&#160;&#160;&#160;&#160;&#160;WDC_MINER_COINBASE: #Represents the address of the miner. Use the WisdomChain tool or wallet to generate the address of WisdomChain version 2.0 (only the prefix "WX" is supported). If the previous ENABLE_MINING is false, there will be no such prompt
+<br>&#160;&#160;&#160;&#160;&#160;&#160;P2P_ADDRESS: #Indicates the IP address of the node
+<br>&#160;&#160;&#160;&#160;&#160;&#160;	  The format example is：wisdom://192.168.1.57:9585
+<br>&#160;&#160;&#160;&#160;&#160;&#160;	  The miner node's IP address is set to the external network IP. The full node can set the external / internal network IP. Port 9585 is the default port. If it is not 9585, you need to modify port mapping in the wdc.yml</font>
+<br>&#160;&#160;&#160;&#160;&#160;&#160;If you need to configure other parameters, you can modify them after deployment. For specific parameters, refer to 2.2.8 environment variables
+<br>D.“<font color=green>WDC node deployment successful!</font>” indicates successful deployment.
+An example of normal deployment interface is as follows:	
 ![python-success](img/success.png)
 
-### 2.4.3 报错问题
-4.1 <b>“Download exception, please check the network condition”</b><br>&#160;&#160;&#160;&#160;&#160;&#160;此类错误，请检查服务器网络是否正常，用户是否是root或是有管理员权限用户
+### 2.4.3 Error Reporting
+4.1 <b>“Download exception, please check the network condition”</b><br>&#160;&#160;&#160;&#160;&#160;&#160;Please check whether the server network is normal, whether the user is root or has administrator privileges.
 
 4.2 <b>“An exception occurred. Please enter again”</b><br>&#160;&#160;&#160;&#160;&#160;&#160;
-此类错误，配置参数的json文件出现问题，会重新让用户配置，如果没有让用户重新配置，把env.json删除掉后，重新执行部署工具
+This kind of error is caused by a problem in the json file of the configuration parameter, which will make the user configure again. If the user is not allowed to reconfigure, delete env.json and execute the deployment tool again.
 
-4.3 <b>程序卡在“fast-sync.zip downloading,the time may be long, please be patient.........”后很长时间不动</b>
+4.3 <b>The program stopped at“fast-sync.zip downloading,the time may be long, please be patient.........”for a long time</b>
 ![python-problem](img/problem.png)
-<br>&#160;&#160;&#160;&#160;&#160;&#160;此类错误，查看用户是否是root或是有管理员权限用户在执行部署工具，或者是/opt/文件路径不存在，需手动创建下
+<br>&#160;&#160;&#160;&#160;&#160;&#160;For this kind of error, check whether the user is root or the user with administrator rights is executing the deployment tool, or the /opt/ file path does not exist. You need to create it manually.
 
 4.4 <b>“Please check whether the operating system is Linux”</b>
 
-&#160;&#160;&#160;&#160;&#160;&#160;此类错误，操作系统不是linux操作系统
+&#160;&#160;&#160;&#160;&#160;&#160;The operating system is not a linux operating system.
 
 4.5 <b>“There is no fast_sync.zip in the current path,Please rerun”</b>
 
-&#160;&#160;&#160;&#160;&#160;&#160;此类错误，快速同步fast_sync.zip压缩包检测不到，重新执行脚本工具
-
-4.6 <b>“The normal exit”</b>
-
-&#160;&#160;&#160;&#160;&#160;&#160;此类错误，输入错误数据超过三次，程序自动退出，请检查所输参数是否合法
-
-### 2.4.5 启动节点
-&#160;&#160;&#160;&#160;&#160;&#160;执行 docker-compose -f wdc.yml up -d 启动节点程序，新节点可以直接启动，如果是之前部署过的节点，需要重新pull下最新代码镜像，具体参考 2.3 节点启动流程
-
-## 2.5 参数配置
-
-|参数项| 参数说明|作用
-|---|---|---
-|<div style="width:155pt">DATA_SOURCE_URL</div> | <div style="width:70pt">数据库配置</div>|默认为```jdbc:postgresql://wdc_pgsql:5432/postgres```，利用docker容器互联，不必修改。如果需要修改，需确保URL中的主机名为pgsql容器名，端口与pgsql容器内部的数据库端口相同
-|DB_USERNAME|数据库名称|默认为replica
-|DB_PASSWORD|数据库密码|默认为replica
-|ENABLE_MINING|是否开启挖矿|true是开启，false是关闭
-|WDC_MINER_COINBASE|矿工地址|WDC生成的地址
-|P2P_MODE|通讯模式|grpc
-|P2P_ADDRESS|节点地址|模式为wisdom://192.168.1.156:9585
-|BOOTSTRAPS|种子节点|默认为wisdom://47.74.183.249:9585,wdom://47.74.216.251:9585,wisdom://47.96.67.155:9585,wisdom://47.74.86.106:9585
-|MAX_BLOCKS_PER_TRANSFER|最大同步区块数|默认256
-|ENABLE_DISCOVERY|是否开启节点发现|true是开启，false是关闭
-|FAST_SYNC_DIRECTORY|快照文件路径（此路径为容器内的路径，需要与wdc.yml中配置volumes下的保持一致）|/fast-sync
-|DATABASE_DIRECTORY|leveldb存储路径（此路径为容器内的路径，需要与wdc.yml中配置volumes下的保持一致）|/leveldb
-
-
-## 2.6 控制台工具
-详见：
-https://github.com/WisedomChainGroup/java-wisdomcore/tree/master/wisdom-core/src/main/java/org/wisdom/ipc
-
+&#160;&#160;&#160;&#160;&#160;&

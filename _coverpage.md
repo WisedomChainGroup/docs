@@ -1,8 +1,8 @@
 ![logo](img/favicon-big.png)
 
-# 公链文档知识库
+# Public Chain Document Knowledge Base
 
-> 详细介绍了公链相应技术，包含公链、浏览器、运维工具、一键部署工具等等
+> The corresponding technologies of public chain are introduced in detail, including public chain, browser, operation and maintenance tools, one click deployment tools, etc
 
 
 [Github](https://github.com/WisedomChainGroup/docs.git)

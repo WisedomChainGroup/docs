@@ -1,14 +1,14 @@
-# 九、共识机制
-## 9.1 共识流程
-&#160;&#160;&#160;&#160;&#160;&#160;全节点成为矿工节点首先需要抵押10万的WDC才能竞选矿工节点，所有抵押超过10万WDC的地址会按照被投票的权益进行排序，只有投票权益前15名的地址才能成为矿工。每到一个纪元（一纪元=120个区块），以当前投票权益重新排序出前15名矿工节点出块，该纪元内矿工列表不会再重新排序，直到下一个纪元开始才会重新排序，而矿工节点最多只能15个。
+# 9. Consensus Mechanism
+## 9.1 Consensus Process
+&#160;&#160;&#160;&#160;&#160;&#160;All nodes need to mortgage 100000 WDC to run for miner node first. All WDC addresses with mortgage of more than 100000 will be sorted according to the voting rights and interests. Only the top 15 addresses with voting rights can become miners. Each era (one era = 120 blocks), the top 15 miners' nodes will be reordered according to the current voting rights. The list of miners in this era will not be reordered until the beginning of the next era, and the maximum number of miners' nodes can be 15.
 
-&#160;&#160;&#160;&#160;&#160;&#160;区块高度在285600之前，出块平均间隔是30秒，在此高度后，出块平均间隔调整为10秒，现一个纪元的出块平均时间是10*120=1200秒=20分钟。
+&#160;&#160;&#160;&#160;&#160;&#160;Before the block height of 285600, the average interval between blocks is 30 seconds. After this height, the average interval of blocks is adjusted to 10 seconds. The average time of block production in the current era is 10 * 120 = 1200 seconds = 20 minutes.
 
-&#160;&#160;&#160;&#160;&#160;&#160;出块顺序是根据矿工列表出块，当轮到某个矿工出块时，矿工从事务内存池中筛选出合法的事务，打包进区块，通过p2p协议广播到网络中。除此之外，矿工还需要完成一定的工作量证明，矿工需要在30秒内解决哈希值计算难题，找到一个随机数满足区块的哈希值小于当前纪元的难度值，难度值每过一个纪元调整一次。
+&#160;&#160;&#160;&#160;&#160;&#160;The block sequence is based on the miners list. When a miner comes out block, the miners select legitimate transactions from the transactional memory pool, pack them into blocks, and broadcast them through the p2p protocol to the network. In addition, the miners also need to complete a certain workload proof. Miners need to solve hash calculation problems within 30 seconds. Find a random number to meet the block hash value less than the current era's difficulty, and the difficulty value is adjusted once every era.
 
-&#160;&#160;&#160;&#160;&#160;&#160;每个矿工出块间隔最多30秒，如果该矿工在30秒内没有成功出块，会直接跳过该矿工出块，按照顺序安排下一个矿工出块。
-## 9.2 密码算法
-&#160;&#160;&#160;&#160;&#160;&#160;共识用到的哈希算法有：
+&#160;&#160;&#160;&#160;&#160;&#160;Each miner has an interval of up to 30 seconds to output block. If the miner fails to produce a block within 30 seconds, it will skip the miner directly and arrange the next miner output block in sequence.
+## 9.2 Cryptographic Algorithm
+&#160;&#160;&#160;&#160;&#160;&#160;The hash algorithms used in consensus are：
 
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;WHIRLPOOL
 
@@ -21,18 +21,18 @@
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;KECCAK-256
 
 &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;SKEIN256-256
-## 9.3 见证者
+## 9.3 Witness
 
-&#160;&#160;&#160;&#160;&#160;&#160;见证者需要满足的条件有
+&#160;&#160;&#160;&#160;&#160;&#160;The witness needs to meet the following conditions
 
-&#160;&#160;&#160;&#160;&#160;&#160;1、抵押至少10万的WDC
+&#160;&#160;&#160;&#160;&#160;&#160;1. Mortgage at least 100 thousand of WDC
 
-&#160;&#160;&#160;&#160;&#160;&#160;2、投票权益排在前15名
+&#160;&#160;&#160;&#160;&#160;&#160;2. Voting rights rank among the top 15.
 
-&#160;&#160;&#160;&#160;&#160;&#160;3、投票数不能为0
-## 9.4 主链规范化
-&#160;&#160;&#160;&#160;&#160;&#160;节点收到区块后会写入到ForkDB中临时保存，当区块收到2/3矿工确认后，也就是在这个区块后又接收到了一定数量的合法区块，这部分的区块的出块者满足该纪元中2/3矿工列表的矿工，这就是2/3矿工确认。那该区块被永久确认，写入磁盘。
+&#160;&#160;&#160;&#160;&#160;&#160;3. The number of votes can not be 0.
+## 9.4 Standardization of Main Chain
+&#160;&#160;&#160;&#160;&#160;&#160;After receiving the block, the node will write it to ForkDB for temporary storage. When the block receives confirmation from 2/3 miners, that is, after the block receives a certain number of legal blocks, the blocker of this part of the block meets the miners in the 2/3 miner list in the era, which is the 2/3 miner confirmation. Then the block is permanently acknowledged and written to disk.
 
-&#160;&#160;&#160;&#160;&#160;&#160;节点具有一定的临时分叉容错能力（可能性比较低），但是如果两个节点发生了硬分叉，也就是两个节点在同一高度上存在不同的被确认的区块，此时需要手动删除硬分叉的区块，并保留其中一个节点的分支。或者运行WDC官方提供的运维工具，会自动检测节点是否分叉，如果节点出现分叉，会自动修复保留高度最高的那条分支。
-## 9.5 惩罚机制
-&#160;&#160;&#160;&#160;&#160;&#160;在一个纪元内，矿工没有出一个区块，该矿工地址会被永久拉黑，无法再成为矿工。若想该节点再次成为矿工节点，需要把被拉黑矿工地址上的抵押撤回，把投票也撤回，重新生成一个新的矿工地址，转移到新的矿工地址上，下个纪元满足矿工要求，就可以继续出块了。
+&#160;&#160;&#160;&#160;&#160;&#160;The node has a certain temporary bifurcation fault-tolerant ability (the possibility is relatively low), but if two nodes have hard bifurcation, that is, the two nodes have different confirmed blocks at the same height, it is necessary to manually delete the hard forked blocks and keep the branch of one of the nodes. Or run the operation and maintenance tools provided by the WDC official, and automatically detect whether the node is bifurcated. If the node bifurcates, it will automatically repair the branch with the highest reserved height.
+## 9.5 Punishment Mechanism
+&#160;&#160;&#160;&#160;&#160;&#160;In an era, the miner did not output a block, and the miner's address would be permanently blackened and could no longer be a miner. If the node wants to become a miner node again, it needs to withdraw the mortgage on the address of the black miner, withdraw the vote, regenerate a new miner's address and transfer it to a new miner's address. If the node meets the requirements of miners in the next era, it can continue to output block.

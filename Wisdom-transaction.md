@@ -1,61 +1,62 @@
-# 五、 事务结构
-## 5.1 事务类型
+# 5. Transaction Structure
+## 5.1 Transaction Type
 
-| 编号 | 交易类型|说明
+| Number | Transaction type|Explaination
 | :----:|:----:|:----:
-| 1 | 0x00|coinbase事务
-| 2 | 0x01|WDC转账
-| 3 | 0x02|投票
-| 4 | 0x03|存证事务
-| 5 | 0x07|规则部署
-| 6 | 0x08|规则调用
-| 7 | 0x09|申请孵化
-| 8 | 0x0a|获取利益收益
-| 9 | 0x0b|获取分享收益
-| 10 | 0x0c|提取本金
-| 11 | 0x0d|撤回投票
-| 12 | 0x0e|抵押
-| 13 | 0x0f|撤回抵押
+| 1 | 0x00|coinbase transaction
+| 2 | 0x01|WDC transfer
+| 3 | 0x02|vote
+| 4 | 0x03|certificate storage transaction
+| 5 | 0x07|rule deployment
+| 6 | 0x08|rule call
+| 7 | 0x09|apply for incubation
+| 8 | 0x0a|gain benefits
+| 9 | 0x0b|gain share income
+| 10 | 0x0c|withdraw principal
+| 11 | 0x0d|withdraw  vote
+| 12 | 0x0e|mortgage
+| 13 | 0x0f|withdraw mortgage
 
-##  5.2 事务结构
+##  5.2 Transaction Structure
 
-| 编号 | 字段名|作用|类型
+| <div style="width:60pt">Number</div> | Field name|Effect|Type
 | :----:|:----:|---|:----:|
-| <div style="width:23pt;">1</div> | <div style="width:60pt">version</div>|事务版本|<div style="width:90pt">1字节</div>
-| 2 | txHash |事务哈希|32字节SHA3-256
-| 3 |type|事务类型|1字节
-| 4 |nonce|防止重放攻击|无符号64位
-| 5|from|签发者公钥|32字节
-| 6|gasPrice|手续费单价，实际的手续费是单价乘以Gas值|无符号64位
-| 7|amount|转账金额，根据不同的事务类型，转账金额可以分别表示普通转账、孵化本金、利息提取、分享收益提取等等|无符号64位
-| 8|signature|签发者的签名|byte[]
-| 9|to|接受者公钥哈希，如果是存证和规则部署，则全部填零；若是投票，填写目标的公钥哈希；若是规则调用，填写规则编程的公钥哈希|20字节Hash160
-| 10|payloadLen|字节长度|4字节
-| 11|payload|字节数组，这里可以存储存证数据，也可以是孵化脚本和存证数据；如果是规则部署，则是字节格式的规则程序，第一个字节表示规则类型；如果是规则调用，则是字节格式的规则调用程序，第一个字节表示调用规则类型|byte[]
+|1| <div style="width:60pt">version</div>|transaction version|<div style="width:90pt">1byte</div>
+| 2 | txHash |transaction hash|32byteSHA3-256
+| 3 |type|transaction type|1byte
+| 4 |nonce|prevent replay attacks|unsigned 64 bit t
+| 5|from|issuer public key|32byte
+| 6|gasPrice|service charge unit price, the actual service charge is the unit price multiplied by Gas value|unsigned 64 bit
+| 7|amount|transfer amount, according to different transaction types, the transfer amount can represent ordinary transfer, incubation principal, interest extraction, shared income extraction, etc|unsigned 64 bit
+| 8|signature|signature of signer|byte[]
+| 9|to|The receiver's public key hash, if it is certificate storage and rule deployment, fill in all zeros; if it is a vote, fill in the target's public key hash; if it is a rule call, fill in the public key hash of rule programming|20byteHash160
+| 10|payloadLen|byte length|4byte
+| 11|payload|Byte array, which can store certificate data, incubation script and certificate data; if it is rule deployment, it is rule program in byte format, and the first byte represents rule type; if it is rule call, it is rule calling program in byte format, and the first byte represents calling rule type|byte[]
 
-##  5.3 关于payload
-&#160;&#160;&#160;&#160;&#160;&#160;不同的事务类型，payload中的存储数据各不相同，但存储类型相同，都是字节数组。除去coinbase事务、WDC转账、投票和抵押是没有payload,以下是其他类型事务的payload说明：
+##  5.3 About payload
+&#160;&#160;&#160;&#160;&#160;&#160;For different transaction types, the storage data in payload is different, but the storage type is the same, which is byte array. Except for coinbase transaction, WDC transfer, voting and mortgage, there is no payload. The following is a description of payloads for other types of transactions：
 
-&#160;&#160;&#160;&#160;&#160;&#160;存证：存放存证数据，编码格式官方推荐用UTF-8，不然在官方浏览器上查看存证数据会乱码；
+&#160;&#160;&#160;&#160;&#160;&#160;Certificate of deposit: storing the certificate data, the encoding format is officially recommended to use UTF-8, otherwise the data will be confused when viewed on the official browser；
 
-&#160;&#160;&#160;&#160;&#160;&#160;规则部署：存放规则部署数据，其payload分为两段，第一段表示规则类型，1个字节，第二段是规则部署数据，RLP编码格式；
+&#160;&#160;&#160;&#160;&#160;&#160;Rule deployment: stores the rule deployment data, and its payload is divided into two sections. The first segment represents the rule type, 1 byte, and the second segment is the rule deployment data in RLP encoding format；
 
-&#160;&#160;&#160;&#160;&#160;&#160;规则调用：存放规则调用数据，其payload分为两段，第一段表示调用规则类型，1个字节，第二段是规则部署数据，RLP编码格式；
+&#160;&#160;&#160;&#160;&#160;&#160;Rule call: stores the rule call data, and its payload is divided into two sections. The first segment represents the type of calling rule, 1 byte, and the second segment is rule deployment data, RLP code lattice；
 
-&#160;&#160;&#160;&#160;&#160;&#160;申请孵化：存放孵化数据，用Protobuf定义，使用格式如下，该事务已禁用；
+&#160;&#160;&#160;&#160;&#160;&#160;Apply for Incubation: store incubation data, defined by Protobuf, in the following format. The transaction has been disabled;
 
 &#160;&#160;&#160;&#160;&#160;&#160;{
 
-&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;   "txid": //申请孵化时为空，后续加入，为空时填0
+&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;   "txid": //When applying for hatching, it is blank. If it is added later, fill in 0 when it is blank
 
-&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;    "sharepubkeyhash":十六进制哈希值
+&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;    "sharepubkeyhash":Hexadecimal hash value
 
-&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;    "type"：120,//value给一个字节
+&#160;&#160;&#160;&#160;&#160;&#160; &#160;&#160;&#160;&#160;&#160;&#160;    "type"：120,//value give a byte
 
 &#160;&#160;&#160;&#160;&#160;&#160;}
 
-&#160;&#160;&#160;&#160;&#160;&#160;获取利益收益/获取分享收益/提取本金：存放申请孵化事务哈希，32字节；
+&#160;&#160;&#160;&#160;&#160;&#160;Obtain interest income / share income / withdraw principal: deposit application incubation transaction hash, 32 bytes；
 
-&#160;&#160;&#160;&#160;&#160;&#160;撤回投票：存放投票事务哈希，32字节；
+&#160;&#160;&#160;&#160;&#160;&#160;Withdraw vote: store the voting transaction hash, 32 bytes；
 
-&#160;&#160;&#160;&#160;&#160;&#160;撤回抵押：存放抵押事务哈希，32字节。
+&#160;&#160;&#160;&#160;&#160;&#160;Withdraw Mortgage: store the mortgage transaction hash, 32 bytes.
+
