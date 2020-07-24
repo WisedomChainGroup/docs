@@ -2,7 +2,7 @@
 ## 1.1 What is WisdomChain?
 ```
 Let the credit flow unprecedented,let the infinite imagination play,Let the infinite value can be embodied,until every corner of the planet.
-                         
+
                                                                                                                      ——Genesis block message
 ```
 &#160;&#160;&#160;&#160;&#160;&#160;WisdomChain (short for "WDC") is a basic public chain which is oriented to business applications.Its functional design is carried out around asset definition, multi signature, conditional payment and certificate storage. Based on the design principles of stable security and multi-party autonomy, a unique implementation of technology stack is introduced in the design of performance, security and system openness.WisdomChain provides a simple and reliable technology implementation mechanism, and has a series of tool chains as application service middleware to reduce the use cost.
