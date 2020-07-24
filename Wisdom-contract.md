@@ -234,17 +234,13 @@ Note that if it is forwarding between ordinary addresses, no matter WDC or custo
 
 6、Pubkeyhashs，represents an array of public key hashes
 
-&#160;&#160;&#160;&#160;&#160;&#160;
-1) Must be a legal public key hash
+&#160;&#160;&#160;&#160;&#160;&#160;1) Must be a legal public key hash
 
-&#160;&#160;&#160;&#160;&#160;&#160;
-2) It must be consistent with pubkeys
+&#160;&#160;&#160;&#160;&#160;&#160;2) It must be consistent with pubkeys
 
-&#160;&#160;&#160;&#160;&#160;&#160;
-3) When deploying rules, once deployed, the public key hash sorting order in the array cannot be changed
+&#160;&#160;&#160;&#160;&#160;&#160;3) When deploying rules, once deployed, the public key hash sorting order in the array cannot be changed
 
-&#160;&#160;&#160;&#160;&#160;&#160;
-4) When multi-signing, the first element must be consistent with the transaction signer without following the order of arrangement
+&#160;&#160;&#160;&#160;&#160;&#160;4) When multi-signing, the first element must be consistent with the transaction signer without following the order of arrangement
 
 7、When constructing a transaction, the nonce of the original payload signature is the current nonce of the constructed transaction from
 
@@ -362,3 +358,209 @@ Key points of process
 
 ## 12.6 Hash Locking
 &#160;&#160;&#160;&#160;&#160;&#160;When a payment needs to meet a certain condition to be triggered, it is called conditional payment. "Hash time locking" is a condition, and block high locking payment is also a kind of payment. For blockchain, payment is a kind of transaction structure. After the verification is passed and the asset is transferred into the block, however, the transfer of the asset does not mean that the target party can use it immediately. When the asset is calculated into its own balance, it will judge whether it meets the condit
+### 12.6.1 Hash &amp; time lock payment
+#### 12.6.1.1 Grammatical Format
+```json
+{
+　　"HASHTIMELOCK_RULE":{
+　　　　"asset160hash":[],
+　　　　"pubkeyhash":[]
+　　}
+}
+```
+|Number| Rule function|Notes
+|:----:|---|:----:|
+|1|```"transfer"{ value":"50", ;"hashresult":"", "timestamp":"" }```|Forwarding assets
+|2|```"get":{ "transferhash":"", "origintext":"" }```|Get locked assets
+
+#### 　　12.6.1.2  Rule Attribute
+1、asset160hash，is the hash160 value of the asset
+
+&#160;&#160;&#160;&#160;&#160;&#160;verify points：
+
+&#160;&#160;&#160;&#160;&#160;&#160;1）、If it is WDC, fill in 0 here
+
+&#160;&#160;&#160;&#160;&#160;&#160;2）、If it is a user-defined asset, you need to verify whether it exists in the block
+
+&#160;&#160;&#160;&#160;&#160;&#160;3）、In a block, lock rule deployment and forward transactions to assets cannot be included at the same time
+
+２、Pubkeyhashs，is the public key hash of the destination account address
+
+&#160;&#160;&#160;&#160;&#160;&#160;1）、Only public key hash of normal account address is supported
+
+&#160;&#160;&#160;&#160;&#160;&#160;2）、It must be a legitimate public key hash, such as an address with a length of 160 bits that can be converted into a normal prefix
+
+####  12.6.1.3 Rule function
+|<div style="width:50pt">number</div>  | Rule function|verify points
+|:----:|---|---|
+|1|```"transfer"{ "value":"50", "hashresult":"", "timestamp":"" }```|1、Verify that the balance of the sender's corresponding asset is sufficient  <br>2、The amount must be numerical and accurate <br>3、The from part of the transaction data indicates that it is the issuer<br>4、The rule deployment account can not be the same as the issuing account. <br>5、hashresult,it refers to the 256 hash value of an original text <br>&#160;&#160;&#160;&#160;&#160;&#160;1）、This is an initial value, which needs to be made when deploying rules  <br>&#160;&#160;&#160;&#160;&#160;&#160;2）、It needs to be 256 bits long  <br>6、blockheight,is the specified height <br>&#160;&#160;&#160;&#160;&#160;&#160;1）、Must be greater than or equal to 0 and an integer <br>i&#160;&#160;&#160;&#160;&#160;&#160;2）、Can specify a higher height than the current one <br>&#160;&#160;&#160;&#160;&#160;&#160;3）、If the height is less than or equal to the current height, it means that it is activated immediately after forwarding<br>&#160;&#160;&#160;&#160;&#160;&#160;4）、When the height is greater than or equal to the specified height, the unlocking is effective
+|2|``` "get":{ "transferhash":"", "origintext":"" }```|1、transferhash is the hash of the issue transaction <br>2、origintext,it refers to the original text to verify whether the same hash value can be obtained. <br>3、After the hash and time are verified successfully, update the target account address balance <br>4、The minimum possible time stamp for the current block must be greater than or equal to the timestamp in the rule. <br>5、Only pubkeyhash in rule deployment can issue transactions of get rules
+
+### 12.6.2 Hash &amp; block height locked payment
+#### 12.6.2.1 Grammatical Format
+```json
+{
+    "HASHHEIGHTLOCK_RULE":{
+       "asset160hash":[],
+       "pubkeyhash":[]
+    }
+}
+```
+|<div style="width:50pt">number</div> | rule function|Notes
+|:----:|---|:----:|
+|1|```"transfer"{ "value":"50", "hashresult":"", "blockheight":"" }```|Forwarding assets
+|2|```"get":{ "transferhash":"", "origintext":"" }``` |Get locked assets　
+
+#### 　　12.6.2.2  Rule Attribute
+1、asset160hash，is the hash160 value of the asset
+
+&#160;&#160;&#160;&#160;&#160;&#160;&#160;verify points：
+
+&#160;&#160;&#160;&#160;&#160;&#160;1）、If it is WDC, fill in 0 here
+
+&#160;&#160;&#160;&#160;&#160;&#160;2）、If it is a user-defined asset, you need to verify whether it exists in the block
+
+&#160;&#160;&#160;&#160;&#160;&#160;3）、In a block, lock rule deployment and forward transactions to assets cannot be included at the same time
+
+２、Pubkeyhashs，is the public key hash of the destination account address
+
+&#160;&#160;&#160;&#160;&#160;&#160;1）、Only public key hash of normal account address is supported
+
+&#160;&#160;&#160;&#160;&#160;&#160;2）、It must be a legitimate public key hash, such as an address with a length of 160 bits that can be converted into a normal prefix
+
+####  12.6.2.3 Rule function
+|<div style="width:50pt">number</div>  |  Rule function|verify points
+|:----:|---|---|
+|1|```"transfer"{ "value":"50", "hashresult":"", "blockheight":"" }```|1、 Verify that the balance of the sender's corresponding asset is sufficient<br>2、The amount must be numerical and accurate <br>3、The from part of the transaction data indicates that it is the issuer  <br>4、The rule deployment account can not be the same as the issuing account <br>5、hashresult,it refers to the 256 hash value of an original text <br>1）、This is an initial value, which needs to be made when deploying rules  <br>2）、It needs to be 256 bits long  <br>6、blockheight,is the specified height <br>1）、Must be greater than or equal to 0 and an integer <br>2）、Can specify a higher height than the current one <br>3）、If the height is less than or equal to the current height, it means that it is activated immediately after forwarding <br>4）、When the height is greater than or equal to the specified height, the unlocking is effective
+|2|```"get":{ "transferhash":"","origintext":"" }```|1、transferhash is the hash of the issue transaction<br>2、origintext,it refers to the original text to verify whether the same hash value can be obtained <br>3、After the hash and time are verified successfully, update the target account address balance <br>4、The minimum possible time stamp for the current block must be greater than or equal to the timestamp in the rule <br>5、Only pubkeyhash in rule deployment can issue transactions of get rules
+
+## 12.7 Quota Condition Proportional Payment
+
+The basic logic is as follows:
+
+1) A certain address is transferred a certain amount to locking rules, assuming 1000.
+
+2) The total amount in the rule still belongs to the user.
+
+3) In the rules, you can set the proportion of transfer out allowed and the height change of triggering transfer out.
+
+4) The target address  can also be set in the rule (optional parameter).
+
+5) There is a multiplier relationship between the proportion of the permitted transfer and the total amount.
+
+6) The transfer out ratio is calculated relative to the total amount transferred in, not the balance after each transfer out.
+
+### 12.7.1 Grammatical Format
+```json
+{
+    "RATEHEIGHTLOCK _RULE": {
+        "asset160hash":[],
+        "onetimedepositmultiple":Integer,
+        "withdrawperiodheight":Long,
+        "withdrawrate":Double,
+        "dest":[],
+        "stateMap":[
+            deposithash -> Extract类 ,
+            ......
+        ]
+    }
+}
+```
+
+### 12.7.2 Rule Attribute
+1、asset160hash
+
+160 hash of the asset<br><font color=orange>In this function implementation, only WDC is supported, and all of them must be 0 during verification. The code supports non WDC assets to ensure the existence of assets. The verification only supports WDC temporarily</font>
+
+2、onetimedepositmultiple
+
+The multiple relationship of corresponding assets is transferred to the rule every time.<br> color=orange>For example, if it is 100, it must be transferred in according to the multiple of 100, and the minimum value is 100. Other cases are the same
+<br>Note：<font color=orange>
+<br>1）、Cannot be negative, 0, and 1<br>2）、Can't be a decimal<br>3）、Can't be more than 100 million</font>
+
+3、withdrawperiodheight
+<br>
+The extraction height cycle of an asset, such as 10, means that after the asset is transferred in, it can only be extracted once every 10 heights
+Assuming that assets are transferred at 9 heights, they can be extracted at 20 heights. From this point forward, the next height can be extracted at 31.
+
+Note that the withdrawal according to the height is processed one by one. That is to say, even if a certain height in the middle is not withdrawn, for example, the 20th height is not withdrawn, then all the balances cannot be consolidated and withdrawn at one time
+<br><font color=orange>
+1）、 The height cycle can not be 0<br>
+2）、Must be a positive integer
+<br>
+3）、Cannot exceed the maximum value of an unsigned 32-bit integer</font>
+
+4、withdrawrate
+<br>
+Withdraw rate
+<br>
+When the height conditions are met, it can only be the specified ratio of the amount transferred in. For example, if the transfer amount is 1000, and the withdrawal rate is 10% at a time, the withdrawal can only be 100 each time.
+Note that different transfers are independent. For example, if they are transferred over 1000 and 2000, they are also extracted separately.
+<br>
+<font color=orange>
+1）、 The ratio is expressed as a percentage, such as 10%, 5%, 0.5%. The actual storage can only put the molecular part, and the molecular part cannot be greater than or equal to 100<br>
+2）、The product of the minimum transfer in amount and the withdrawal ratio cannot exceed the precision
+<br>
+3）、The ratio must be set to ensure that all withdrawals can be completed and the amount of money withdrawn each time is the same. Reference algorithm: use the minimum transfer in amount multiplied by the ratio to get the result S1, and then the minimum transfer in amount modulus S1. If the result is 0, there is no problem
+<br>
+4）、The node receives a ratio without  % sign, with a maximum of 8 decimal places</font>
+
+Note
+After transfer in and withdrawal, each user will keep the status and save the withdrawable balance of a certain transfer in for verification
+
+4、dest
+<br>
+The target address, if it is 0, means that it can be transferred to any address.<br>If specified, it can only be constrained to extract to the specified address<br>Store as address hash
+
+Note: no matter how this field is set, the user's assets in the transfer in rule can always be extracted to the source address at the time of transfer in, which is equivalent to canceling the transfer in. However, it must be carried out according to the height cycle and extraction ratio in the rule.
+
+5、stateMap
+<br>
+The details of each transfer in amount are stored in the form of Key-Value
+<br>
+Key is the transferred transaction hash
+<br>
+Value is the Extract class. Each time an extraction transaction is sent, the latest extraction height and the remaining times will be updated. Initialization is the highest number of times
+
+```
+Extract{
+    extractheight:,//Latest extraction height long
+    surplus://Remaining times int
+}
+```
+
+After each extraction, surplus will be reduced by one, and surplus is 0, indicating that the record has been extracted and cleared
+
+
+### 12.7.3 Rule Function
+
+1、Transfer in
+
+```
+"deposit": {
+        "value": 50
+    }
+```
+Indicates that the user transfers in the specified amount
+<br>1）、Note that it cannot be greater than the available balance of the corresponding asset of the user<br>2）、Must meet the multiple requirements of the rule
+
+2、Extract
+
+```
+"withdraw": {
+        "deposithash":,  //Transferred transaction hash
+        "to":   //Public key hash, which may be a normal account or multi-signatures
+    }
+```
+
+1）、Check whether the assignment of to meets the constraint conditions according to the rules
+
+2）、Make sure that the deposithash exists
+
+3）、The from of sending deposit is consistent with that of sending withdraw. Only a can send withdraw transaction when a sends deposit transaction
+
+### 12.7.4  Transaction Isolation
+
+1、Rules must be deployed before they can be called. Deployment transaction and calling transaction cannot be in the same block
+
+2、If deposit and withdraw are associated transactions, that is to say, the deposit withdrew from the same block is not allowed.

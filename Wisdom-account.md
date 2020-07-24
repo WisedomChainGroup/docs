@@ -29,7 +29,7 @@
 
 &#160;&#160;&#160;&#160;&#160;&#160;Incubator is the basic structure of incubation object. In the AccountState object, custom ByteArrayMap is used to store incubation information. Key is the transaction hash applied for incubation, and Value is the Incubator object.
 
-|Nmber| Field|Field/Type|Explanation
+|Number| Field|Field/Type|Explanation
 |:----:|:----:|:----:|---|
 |~~1~~|~~id~~|~~36bytes~~|~~Primary key ID，Disabled~~
 |2|share_pubkeyhash|20bytes|Public key hash of recommender. If there is no recommender, fill in 0
