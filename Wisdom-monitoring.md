@@ -43,24 +43,24 @@
 ## 14.3 Front End Operation
 &#160;&#160;&#160;&#160;&#160;&#160;1)Login page, enter the user name and password to login
 
-![monitoring-login](../img/monitoring-login.png)
+![monitoring-login](img/monitoring-login.png)
 
 &#160;&#160;&#160;&#160;&#160;&#160;2)Information page, showing basic information
 
-![monitoring-index](../img/monitoring-index.png)
+![monitoring-index](img/monitoring-index.png)
 
 &#160;&#160;&#160;&#160;&#160;&#160;3)Console, manage and bind nodes
 
-![monitoring-node](../img/monitoring-node.png)
+![monitoring-node](img/monitoring-node.png)
 
 &#160;&#160;&#160;&#160;&#160;&#160;4)Early warning information, management of receiving and sending mail information
 
-![monitoring-email](../img/monitoring-email.png)
+![monitoring-email](img/monitoring-email.png)
 
 &#160;&#160;&#160;&#160;&#160;&#160;5)Authentication setting, management user setting permissions
 
-![monitoring-user](../img/monitoring-user.png)
+![monitoring-user](img/monitoring-user.png)
 
 &#160;&#160;&#160;&#160;&#160;&#160;6)Branch repair, manually delete blocks and branch recovery
 
-![monitoring-user](../img/monitoring-repair.png)
+![monitoring-user](img/monitoring-repair.png)
