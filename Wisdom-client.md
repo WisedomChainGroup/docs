@@ -504,7 +504,7 @@ This kind of error is caused by a problem in the json file of the configuration 
 
 &#160;&#160;&#160;&#160;&#160;&#160;This kind of error, input error data more than three times, the program exits automatically, please check whether the input parameters are legal.
 
-### 2.4.5 Start Node
+### 2.4.4 Start Node
 &#160;&#160;&#160;&#160;&#160;&#160;Execute docker-compose -f wdc.yml up -d to start the node program. The new node can be started directly. If it is a previously deployed node, you need to re-pull the latest code image. For details, refer to 2.3 node startup process.
 
 ## 2.5 Parameter Configuration
