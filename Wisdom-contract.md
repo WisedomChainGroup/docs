@@ -204,7 +204,7 @@ Note that if it is forwarding between ordinary addresses, no matter WDC or custo
 
 &#160;&#160;&#160;&#160;&#160;&#160;1) Must be greater than or equal to 2
 
-&#160;&#160;&#160;&#160;&#160;&#160;2) Must be less than or equal to 2
+&#160;&#160;&#160;&#160;&#160;&#160;2) Must be less than or equal to m
 
 &#160;&#160;&#160;&#160;&#160;&#160;3) Must be an integer
 
