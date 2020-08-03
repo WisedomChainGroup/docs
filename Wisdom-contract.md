@@ -151,7 +151,7 @@ Grammatical format
 &#160;&#160;&#160;&#160;&#160;&#160;Note an invisible call. When the asset definition rule is deployed, the total amount of issue will be assigned to the owner account by default.
 
 ## 12.5 Multi-Signature
-&#160;&#160;&#160;&#160;&#160;&#160;Multi-signature is to prevent the loss of a single private key or the application security trust problem in crowdfunding mode. The supported mode is M-N, which means that a rule can have M signature at most, but it can be signed when there is MN signature at the same time (note that MN must be less than or equal to NM)
+&#160;&#160;&#160;&#160;&#160;&#160;Multi-signature is to prevent the loss of a single private key or the application security trust problem in crowdfunding mode. The supported mode is M-N, which means that a rule can have M signature at most, but it can be signed when there is N signature at the same time (note that N must be less than or equal to M)
 
 The multi-signature logic supported by this rule is as follows:
 
