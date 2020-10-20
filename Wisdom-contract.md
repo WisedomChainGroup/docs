@@ -1,4 +1,4 @@
-# 12. Programmable Verification Rules
+# 12. Programmable Verification Rules（deprecated）
 ## 12.1 Rule Type
 &#160;&#160;&#160;&#160;&#160;&#160;Because the program function in the public chain is clearly specified and the format is strictly defined, the program composition here is actually more of a template format definition, and the function is clear.
 
