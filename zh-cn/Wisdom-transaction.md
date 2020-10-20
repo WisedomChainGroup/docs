@@ -33,7 +33,7 @@
 | 8|signature|签发者的签名|byte[]
 | 9|to|接受者公钥哈希，如果是存证和规则部署，则全部填零；若是投票，填写目标的公钥哈希；若是规则调用，填写规则编程的公钥哈希|20字节Hash160
 | 10|payloadLen|字节长度|4字节
-| 11|payload|字节数组，这里可以存储存证数据，也可以是孵化脚本和存证数据；If it is a contract, it is the contract's RLP encoded data|byte[]
+| 11|payload|字节数组，这里可以存储存证数据，也可以是孵化脚本和存证数据；如果是合约，则是合约的RLP编码数据|byte[]
 
 
 ##  5.3 关于payload

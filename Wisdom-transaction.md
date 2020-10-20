@@ -33,7 +33,7 @@
 | 8|signature|signature of signer|byte[]
 | 9|to|The receiver's public key hash, if it is certificate storage and rule deployment, fill in all zeros; if it is a vote, fill in the target's public key hash; if it is a rule call, fill in the public key hash of rule programming|20byteHash160
 | 10|payloadLen|byte length|4byte
-| 11|payload|Byte array, which can store certificate data, incubation script and certificate data; |byte[]
+| 11|payload|Byte array, which can store certificate data, incubation script and certificate data; If it is a contract, it is the contract's RLP encoded data|byte[]
 
 ##  5.3 About payload
 &#160;&#160;&#160;&#160;&#160;&#160;For different transaction types, the storage data in payload is different, but the storage type is the same, which is byte array. Except for coinbase transaction, WDC transfer, voting and mortgage, there is no payload. The following is a description of payloads for other types of transactions：
