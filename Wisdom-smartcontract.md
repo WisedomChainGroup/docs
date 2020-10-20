@@ -668,7 +668,6 @@ export function owner(): Address {
     }    
     ```
 
-
     4. Thaw
     ```typescript
     export function unfreeze(amount: U256): void {
