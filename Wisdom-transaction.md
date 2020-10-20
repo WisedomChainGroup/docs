@@ -69,7 +69,7 @@
     # payload is the RLP encoded result of the gasLimit (integer), WebAssembly bytecode, constructor parameters (optional), and ABI in series
 ```
 
-&#160;&#160;&#160;&#160;&#160;&#160;Contract call
+&#160;&#160;&#160;&#160;&#160;&#160;Contract call：
 
 ```python
     payload = rlp(gaslimit, method, args) 

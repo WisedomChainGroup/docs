@@ -70,7 +70,7 @@
     # payload 是 gasLimit (整数)、webassembly 字节码、构造器参数（可选）和abi 串联并经过rlp编码的结果
 ```
 
-&#160;&#160;&#160;&#160;&#160;&#160;合约调用
+&#160;&#160;&#160;&#160;&#160;&#160;合约调用：
 
 ```python
     payload = rlp(gaslimit, method, args) 
